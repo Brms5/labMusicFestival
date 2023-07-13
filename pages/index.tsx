@@ -1,4 +1,4 @@
-import { GlobalStyle } from "../style/GlobalStyle";
+import { GlobalStyle } from "../src/ui/style/GlobalStyle";
 import { Header, Main } from "./style";
 
 const bg = "/rockbands.png";

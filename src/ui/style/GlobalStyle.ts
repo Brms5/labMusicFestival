@@ -24,13 +24,11 @@ export const GlobalStyle = createGlobalStyle`
   body {
     display: flex;
     flex: 1;
-    background-color: white;
   }
   #__next {
     display: flex;
     flex: 1;
     justify-content: center;
-    /* align-items: center; */
   }
   /* Globals */
   button,
