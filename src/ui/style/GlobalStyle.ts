@@ -11,7 +11,6 @@ export const GlobalStyle = createGlobalStyle`
     font-family: Roboto;
     max-width: 1200px;
     width: 100%;
-    /* min-height: 100vh; */
   }
   /* NextJS */
   html {
@@ -25,13 +24,11 @@ export const GlobalStyle = createGlobalStyle`
   body {
     display: flex;
     flex: 1;
-    background-color: white;
   }
   #__next {
     display: flex;
     flex: 1;
     justify-content: center;
-    /* align-items: center; */
   }
   /* Globals */
   button,

@@ -1,14 +1,18 @@
-import { GlobalStyle } from "../style/GlobalStyle";
+import React from "react";
+import { GlobalStyle } from "@ui/style/GlobalStyle";
 import { Header, Main } from "./style";
 
 const bg = "/rockbands.png";
 
 export default function Page() {
+  console.log("bg", bg);
   return (
-    <Main style={{
+    <Main
+      style={{
         backgroundImage: `url('${bg}')`,
         backgroundSize: "cover",
-      }}>
+      }}
+    >
       <GlobalStyle />
       <Header>
         <h1 style={{ color: "black" }}>Hello, Next.js!</h1>
