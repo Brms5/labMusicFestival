@@ -11,7 +11,6 @@ export const GlobalStyle = createGlobalStyle`
     font-family: Roboto;
     max-width: 1200px;
     width: 100%;
-    /* min-height: 100vh; */
   }
   /* NextJS */
   html {
