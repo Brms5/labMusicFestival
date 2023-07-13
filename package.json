@@ -1,0 +1,27 @@
+{
+  "name": "labmusicfestival",
+  "version": "1.0.0",
+  "description": "System to manage a music concert festival",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Brms",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^13.4.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "@types/react": "18.2.14",
+    "nodemon": "^3.0.1"
+  }
+}
