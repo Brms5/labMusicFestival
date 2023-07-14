@@ -4,7 +4,7 @@ import { Header, Main } from "./style";
 
 const bg = "/rockbands.png";
 
-export default function Page() {
+function Page() {
   console.log("bg", bg);
   return (
     <Main
@@ -20,3 +20,5 @@ export default function Page() {
     </Main>
   );
 }
+
+export default Page;
