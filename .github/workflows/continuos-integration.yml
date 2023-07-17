@@ -14,7 +14,7 @@ jobs:
       ## =======================
       - name: "Debug"
         run: |
-          "ls -la"
+          ls -la
           echo "Hello World"
       - name: "Install Dependencies"
         run: "npm install"
