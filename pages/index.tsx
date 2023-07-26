@@ -1,21 +1,16 @@
 import React from "react";
 import { GlobalStyle } from "@ui/style/GlobalStyle";
-import { Header, Main } from "./style";
+import { Header, Main, Title } from "./style";
 
 const bg = "/rockbands.png";
 
 function Page() {
   console.log("bg", bg);
   return (
-    <Main
-      style={{
-        backgroundImage: `url('${bg}')`,
-        backgroundSize: "cover",
-      }}
-    >
+    <Main>
       <GlobalStyle />
       <Header>
-        <h1 style={{ color: "black" }}>Hello, Next.js!</h1>
+        <Title>LIVE MUSIC</Title>
       </Header>
     </Main>
   );
