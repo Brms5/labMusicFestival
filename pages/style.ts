@@ -8,7 +8,6 @@ export const Main = styled.main`
 
 export const Header = styled.header`
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   width: 100%;
