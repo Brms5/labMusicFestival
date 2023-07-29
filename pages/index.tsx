@@ -1,11 +1,45 @@
 import React from "react";
 import { GlobalStyle } from "@ui/style/GlobalStyle";
-import { Header, Main, Title } from "./style";
+import { Content, Header, Main, Title } from "./style";
+import ShowCard from "components/showCard/showCard";
+
+export interface ShowInfo {
+  day: WeekDay;
+  color: string;
+}
+
+export interface WeekDay {
+  weekDay: string;
+  monthDay: number;
+}
 
 const bg = "/music-png.png";
 
+const colors = ["#6C45A6", "#E75099", "#F6A20F", "#009EC9"];
+
+const weekDays = ["THU", "FRI", "SAT", "SUN"];
+const monthDays = [27, 28, 29, 30];
+const days: WeekDay[] = [];
+
+for (let i = 0; i < weekDays.length; i++) {
+  const obj: WeekDay = {
+    weekDay: weekDays[i],
+    monthDay: monthDays[i],
+  };
+  days.push(obj);
+}
+
+const shows: ShowInfo[] = [];
+
+for (let i = 0; i < colors.length; i++) {
+  const obj: ShowInfo = {
+    day: days[i],
+    color: colors[i],
+  };
+  shows.push(obj);
+}
+
 function Page() {
-  console.log("bg", bg);
   return (
     <Main
       style={{
@@ -19,6 +53,11 @@ function Page() {
       <Header>
         <Title>LIVE MUSIC</Title>
       </Header>
+      <Content>
+        {shows.map((showInfo, index) => {
+          return <ShowCard key={index} showInfo={showInfo} />;
+        })}
+      </Content>
     </Main>
   );
 }
