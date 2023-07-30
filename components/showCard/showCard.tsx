@@ -3,6 +3,7 @@ import Card from "@mui/material/Card";
 import { CardContent, CardHeader } from "./style";
 import { ShowInfo } from "pages";
 import BandInfo from "components/bandInfo/bandInfo";
+import Button from "@mui/material/Button";
 
 interface inputShowCard {
   showInfo: ShowInfo;
@@ -18,6 +19,15 @@ export default function ShowCard({ showInfo }: inputShowCard) {
       </CardHeader>
       <CardContent>
         <BandInfo />
+        <Button
+          style={{
+            color: "black",
+          }}
+          variant="outlined"
+          size="medium"
+        >
+          Ver mais
+        </Button>
       </CardContent>
     </Card>
   );
