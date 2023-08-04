@@ -1,9 +1,14 @@
 import { showRepository } from "@server/repository/ShowRepository";
+import { Show } from "@server/schema/show";
 import { NextApiRequest, NextApiResponse } from "next";
 
-async function getShows(request: NextApiRequest, response: NextApiResponse) {
+async function getShowsByDate(
+  request: NextApiRequest,
+  response: NextApiResponse
+): Promise<void> {
   try {
-    showRepository.getAllShows().then((shows) => {
+    const weekDay = request.query.weekday as string;
+    showRepository.findShowsByDate(weekDay).then((shows: Show[]) => {
       response.status(200).json(shows);
     });
   } catch (error) {
@@ -15,6 +20,10 @@ async function getShows(request: NextApiRequest, response: NextApiResponse) {
   }
 }
 
-export const showController = {
-  getShows,
+interface ShowController {
+  getShowsByDate: (request: NextApiRequest, response: NextApiResponse) => void;
+}
+
+export const showController: ShowController = {
+  getShowsByDate,
 };
