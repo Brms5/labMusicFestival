@@ -1,7 +1,7 @@
 import { supabase } from "@server/infra/database/supabase";
 import { Band, bandSchema } from "@server/schema/band";
 
-async function getAllBands(): Promise<Band[]> {
+async function findAllBands(): Promise<Band[]> {
   const { data, error } = await supabase.from("NAME_TABLE_BANDS").select("*");
   if (error) throw new Error(error.message);
 
@@ -11,6 +11,26 @@ async function getAllBands(): Promise<Band[]> {
   return parsedData.data;
 }
 
-export const bandRepository = {
-  getAllBands,
+async function findBandById(bandId: string): Promise<Band> {
+  const { data, error } = await supabase
+    .from("NAME_TABLE_BANDS")
+    .select("*")
+    .eq("id", `${bandId}`)
+    .single();
+  if (error) throw new Error(error.message);
+
+  const parsedData = bandSchema.safeParse(data);
+  if (!parsedData.success) throw new Error(parsedData.error.message);
+
+  return parsedData.data;
+}
+
+interface BandRepository {
+  findAllBands: () => Promise<Band[]>;
+  findBandById: (bandId: string) => Promise<Band>;
+}
+
+export const bandRepository: BandRepository = {
+  findAllBands,
+  findBandById,
 };

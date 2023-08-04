@@ -6,7 +6,7 @@ export default async function handler(
   response: NextApiResponse
 ) {
   if (request.method === "GET") {
-    await showController.getShows(request, response);
+    await showController.getShowsByDate(request, response);
     return;
   }
 

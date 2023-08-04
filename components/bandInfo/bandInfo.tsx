@@ -1,5 +1,8 @@
 import React from "react";
 import { List, ListItem, ListItemText, Divider } from "@mui/material";
+import { Show } from "@server/schema/show";
+import { bandService } from "@ui/services/band";
+import { Band } from "@server/schema/band";
 
 const style = {
   width: "100%",
@@ -7,7 +10,24 @@ const style = {
   // bgcolor: "background.paper",
 };
 
-function BandInfo() {
+interface InputBandInfo {
+  show: Show;
+}
+
+function BandInfo({ show }: InputBandInfo) {
+  const [band, setBand] = React.useState<Band>({} as Band);
+
+  React.useEffect(() => {
+    bandService
+      .getBandById(show.band_id)
+      .then((response) => {
+        setBand(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <List sx={style} component="nav" aria-label="mailbox folders">
       <Divider />
@@ -22,64 +42,10 @@ function BandInfo() {
         }}
       >
         <ListItemText primaryTypographyProps={{ fontSize: "12px" }}>
-          Depeche Mode / Rock
+          {`${band.name} / ${band.music_genre}`}
         </ListItemText>
         <ListItemText primaryTypographyProps={{ fontSize: "12px" }}>
-          17:00 - 19:00
-        </ListItemText>
-      </ListItem>
-      <Divider />
-      <ListItem
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          justifyContent: "space-around",
-          alignItems: "space-between",
-          // backgroundColor: "yellow",
-        }}
-      >
-        <ListItemText primaryTypographyProps={{ fontSize: "12px" }}>
-          Depeche Mode / Rock
-        </ListItemText>
-        <ListItemText primaryTypographyProps={{ fontSize: "12px" }}>
-          17:00 - 19:00
-        </ListItemText>
-      </ListItem>
-      <Divider />
-      <ListItem
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          justifyContent: "space-around",
-          alignItems: "space-between",
-          // backgroundColor: "yellow",
-        }}
-      >
-        <ListItemText primaryTypographyProps={{ fontSize: "12px" }}>
-          Depeche Mode / Rock
-        </ListItemText>
-        <ListItemText primaryTypographyProps={{ fontSize: "12px" }}>
-          17:00 - 19:00
-        </ListItemText>
-      </ListItem>
-      <Divider />
-      <ListItem
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          justifyContent: "space-around",
-          alignItems: "space-between",
-          // backgroundColor: "yellow",
-        }}
-      >
-        <ListItemText primaryTypographyProps={{ fontSize: "12px" }}>
-          Depeche Mode / Rock
-        </ListItemText>
-        <ListItemText primaryTypographyProps={{ fontSize: "12px" }}>
-          17:00 - 19:00
+          {`${show.start_time}:00 - ${show.end_time}:00`}
         </ListItemText>
       </ListItem>
       <Divider />
