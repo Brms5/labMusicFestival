@@ -7,12 +7,21 @@ export const Main = styled.main`
   width: 100%;
 `;
 
-export const Header = styled.header`
+export const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 10%;
+`;
+
+export const TitleDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+  height: 50%;
+  margin-left: 5%;
 `;
 
 export const Title = styled.h1`
@@ -23,6 +32,12 @@ export const Title = styled.h1`
   font-variant: small-caps;
   font-weight: 900;
   color: #8f80bc;
+`;
+
+export const ProfileDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Content = styled.section`
