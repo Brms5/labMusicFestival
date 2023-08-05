@@ -10,6 +10,11 @@ export default async function handler(
     return;
   }
 
+  if (request.method === "POST") {
+    await bandController.createBand(request, response);
+    return;
+  }
+
   response.status(405).json({
     error: {
       message: `Method ${request.method} not allowed`,
