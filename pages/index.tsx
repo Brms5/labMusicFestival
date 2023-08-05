@@ -1,7 +1,8 @@
 import React from "react";
 import { GlobalStyle } from "@ui/style/GlobalStyle";
-import { Content, Header, Main, Title } from "./style";
+import { Content, HeaderContainer, Main } from "./style";
 import ShowCard from "components/showCard/showCard";
+import Header from "components/header/header";
 
 export interface ShowInfo {
   day: WeekDay;
@@ -13,14 +14,9 @@ export interface WeekDay {
   monthDay: number;
 }
 
-const bg = "/music-png.png";
-
-const colors = ["#6C45A6", "#E75099", "#F6A20F", "#009EC9"];
-
 const weekDays = ["THU", "FRI", "SAT", "SUN"];
 const monthDays = [27, 28, 29, 30];
 const days: WeekDay[] = [];
-
 for (let i = 0; i < weekDays.length; i++) {
   const obj: WeekDay = {
     weekDay: weekDays[i],
@@ -29,8 +25,8 @@ for (let i = 0; i < weekDays.length; i++) {
   days.push(obj);
 }
 
+const colors = ["#6C45A6", "#E75099", "#F6A20F", "#009EC9"];
 const shows: ShowInfo[] = [];
-
 for (let i = 0; i < colors.length; i++) {
   const obj: ShowInfo = {
     day: days[i],
@@ -43,16 +39,22 @@ function Page() {
   return (
     <Main
       style={{
-        backgroundImage: `url(${bg})`,
+        backgroundImage: `url(/music-png.png)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
       <GlobalStyle />
-      <Header>
-        <Title>LIVE MUSIC</Title>
-      </Header>
+      <HeaderContainer>
+        <Header />
+        {/* <Title>LIVE MUSIC</Title> */}
+        {/* <TitleDiv>
+        </TitleDiv>
+        <ProfileDiv>
+          <Profile />
+        </ProfileDiv> */}
+      </HeaderContainer>
       <Content>
         {shows.map((showInfo, index) => {
           return <ShowCard key={index} showInfo={showInfo} />;

@@ -1,4 +1,5 @@
 import { bandRepository } from "@server/repository/BandRepository";
+import { BandBody } from "@server/types/band";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function getBands(request: NextApiRequest, response: NextApiResponse) {
@@ -30,12 +31,28 @@ async function getBandById(request: NextApiRequest, response: NextApiResponse) {
   }
 }
 
+async function createBand(request: NextApiRequest, response: NextApiResponse) {
+  try {
+    const bandBody: BandBody = request.body;
+    const band = await bandRepository.insertNewBand(bandBody);
+    response.status(201).json(band);
+  } catch (error) {
+    response.status(400).json({
+      error: {
+        message: "Failed to Create Band",
+      },
+    });
+  }
+}
+
 interface BandController {
   getBands: (request: NextApiRequest, response: NextApiResponse) => void;
   getBandById: (request: NextApiRequest, response: NextApiResponse) => void;
+  createBand: (request: NextApiRequest, response: NextApiResponse) => void;
 }
 
 export const bandController: BandController = {
   getBands,
   getBandById,
+  createBand,
 };

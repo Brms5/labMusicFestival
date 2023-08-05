@@ -1,5 +1,6 @@
 import { supabase } from "@server/infra/database/supabase";
 import { Show, showSchema } from "@server/schema/show";
+import { ShowBody } from "@server/types/show";
 
 async function findAllShows(): Promise<Show[]> {
   const { data, error } = await supabase.from("NAME_TABLE_SHOWS").select("*");
@@ -12,7 +13,6 @@ async function findAllShows(): Promise<Show[]> {
 }
 
 async function findShowsByDate(weekDay: string): Promise<Show[]> {
-  console.log("WEEKDAY: ", weekDay);
   const { data, error } = await supabase
     .from("NAME_TABLE_SHOWS")
     .select("*")
@@ -25,7 +25,31 @@ async function findShowsByDate(weekDay: string): Promise<Show[]> {
   return parsedData.data;
 }
 
-export const showRepository = {
+async function insertNewShow(showBody: ShowBody): Promise<Show> {
+  console.log("SHOW REPOSITORIO: ", showBody);
+  const { data, error } = await supabase
+    .from("NAME_TABLE_SHOWS")
+    .insert([showBody])
+    .select("*")
+    .single();
+  if (error) throw new Error(error.message);
+
+  console.log("DATA: ", data);
+
+  const parsedData = showSchema.safeParse(data);
+  if (!parsedData.success) throw new Error(parsedData.error.message);
+
+  return parsedData.data;
+}
+
+interface ShowRepository {
+  findAllShows: () => Promise<Show[]>;
+  findShowsByDate: (weekDay: string) => Promise<Show[]>;
+  insertNewShow: (showBody: ShowBody) => Promise<Show>;
+}
+
+export const showRepository: ShowRepository = {
   findAllShows,
   findShowsByDate,
+  insertNewShow,
 };

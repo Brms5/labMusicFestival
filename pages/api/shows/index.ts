@@ -6,7 +6,16 @@ export default async function handler(
   response: NextApiResponse
 ) {
   if (request.method === "GET") {
-    await showController.getShowsByDate(request, response);
+    if (request.query.weekday) {
+      await showController.getShowsByDate(request, response);
+    } else {
+      await showController.getShows(request, response);
+    }
+    return;
+  }
+
+  if (request.method === "POST") {
+    await showController.createShow(request, response);
     return;
   }
 
