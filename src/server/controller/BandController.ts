@@ -17,7 +17,7 @@ async function getBands(request: NextApiRequest, response: NextApiResponse) {
 
 async function getBandById(request: NextApiRequest, response: NextApiResponse) {
   try {
-    const bandId = request.query.bandid;
+    const bandId = request.query.bandId;
     bandRepository.findBandById(bandId as string).then((band) => {
       response.status(200).json(band);
     });
