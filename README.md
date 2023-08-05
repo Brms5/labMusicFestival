@@ -1,4 +1,4 @@
-<h1 align="center"> labMusicFestival </h1>
+<h1 align="center">:microphone:	 labMusicFestival :musical_note:</h1>
 
 ## :notebook: About
 
@@ -6,7 +6,7 @@ A festival with several famous bands that will perform over 4 days. The system a
 
 ## :heavy_check_mark: Features
 
-- [] Login and registration flow;
+- [ ] Login and registration flow;
 - [X] Create band;
 - [X] Read band details;
 - [X] Create a show linked to a day;
