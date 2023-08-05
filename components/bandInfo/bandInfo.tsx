@@ -30,7 +30,6 @@ function BandInfo({ show }: InputBandInfo) {
 
   return (
     <List sx={style} component="nav" aria-label="mailbox folders">
-      <Divider />
       <ListItem
         sx={{
           display: "flex",

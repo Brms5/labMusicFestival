@@ -8,14 +8,12 @@ import Menu from "@mui/material/Menu";
 // import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 // import AdbIcon from "@mui/icons-material/Adb";
 import { AppBarStyle } from "./style";
 
-const pages = ["Show"];
-const settings = ["Profile", "Logout"];
+const settings = ["Profile", "Admin", "Logout"];
 
 function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -33,7 +31,15 @@ function Header() {
   return (
     <AppBar position="static" style={AppBarStyle}>
       <Container maxWidth="xl">
-        <Toolbar>
+        <Toolbar
+          sx={{
+            display: "flex",
+            // flexDirection: "column",
+            // backgroundColor: "blue",
+            justifyContent: "space-between",
+            // alignItems: "space-between",
+          }}
+        >
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
           <Typography
             variant="h2"
@@ -110,19 +116,24 @@ function Header() {
           >
             LOGO
           </Typography> */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          {/* <Box sx={{ flexGrow: 1, display: { sm: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                sx={{ my: 2, color: "#E75199", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: "#E75199",
+                  display: "block",
+                  ":hover": { color: "#2B9EC9" },
+                }}
               >
                 {page}
               </Button>
             ))}
-          </Box>
+          </Box> */}
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="">
               <IconButton
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, backgroundColor: "#2B9EC9" }}
@@ -158,4 +169,5 @@ function Header() {
     </AppBar>
   );
 }
+
 export default Header;

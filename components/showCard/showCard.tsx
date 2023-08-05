@@ -6,6 +6,7 @@ import BandInfo from "components/bandInfo/bandInfo";
 import Button from "@mui/material/Button";
 import { showService } from "@ui/services/show";
 import { Show } from "@server/schema/show";
+import { Divider } from "@mui/material";
 
 const weekDays = ["THU", "FRI", "SAT", "SUN"];
 
@@ -52,6 +53,7 @@ export default function ShowCard({ showInfo }: inputShowCard) {
       <CardHeader>
         <h1>{`${showInfo.day.monthDay} JUN - ${showInfo.day.weekDay}`}</h1>
       </CardHeader>
+      <Divider />
       <CardContent>
         {shows.map((show, index) => {
           return <BandInfo key={index} show={show} />;
