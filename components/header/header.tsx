@@ -138,7 +138,7 @@ function Header() {
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, backgroundColor: "#2B9EC9" }}
               >
-                <Avatar sx={{ bgcolor: "#F6A20F" }}>B</Avatar>
+                <Avatar sx={{ bgcolor: "#2B9EC9" }}>B</Avatar>
               </IconButton>
             </Tooltip>
             <Menu

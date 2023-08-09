@@ -9,9 +9,9 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: Roboto;
-    max-width: 1200px;
+    /* max-width: 1200px; */
     width: 100%;
-    background-color: #FFF8DC;
+    background-color: #24D866;
   }
   /* NextJS */
   html {

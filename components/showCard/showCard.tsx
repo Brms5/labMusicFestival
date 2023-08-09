@@ -6,9 +6,7 @@ import BandInfo from "components/bandInfo/bandInfo";
 import Button from "@mui/material/Button";
 import { showService } from "@ui/services/show";
 import { Show } from "@server/schema/show";
-import { Divider } from "@mui/material";
-
-const weekDays = ["THU", "FRI", "SAT", "SUN"];
+import { CardActionArea, Divider } from "@mui/material";
 
 interface inputShowCard {
   showInfo: ShowInfo;
@@ -17,27 +15,9 @@ interface inputShowCard {
 export default function ShowCard({ showInfo }: inputShowCard) {
   const [shows, setShows] = React.useState<Show[]>([]);
 
-  let weekDay: string;
-  for (let i = 0; i < weekDays.length; i++) {
-    if (showInfo.day.weekDay === weekDays[i]) {
-      if (weekDays[i] === "THU") {
-        weekDay = "Thursday";
-      }
-      if (weekDays[i] === "FRI") {
-        weekDay = "Friday";
-      }
-      if (weekDays[i] === "SAT") {
-        weekDay = "Saturday";
-      }
-      if (weekDays[i] === "SUN") {
-        weekDay = "Sunday";
-      }
-    }
-  }
-
   React.useEffect(() => {
     showService
-      .getShowsByDate(weekDay)
+      .getShowsByDate(showInfo.day.weekDay)
       .then((response) => {
         setShows(response);
       })
@@ -48,26 +28,22 @@ export default function ShowCard({ showInfo }: inputShowCard) {
 
   return (
     <Card
-      sx={{ width: 220, height: 400, backgroundColor: `${showInfo.color}` }}
+      sx={{
+        width: 140,
+        height:
+          showInfo.day.monthDay === 25 ||
+          showInfo.day.monthDay === 27 ||
+          showInfo.day.monthDay === 29
+            ? "80%"
+            : "100%",
+        backgroundColor: `${showInfo.color}`,
+      }}
     >
-      <CardHeader>
-        <h1>{`${showInfo.day.monthDay} JUN - ${showInfo.day.weekDay}`}</h1>
-      </CardHeader>
-      <Divider />
-      <CardContent>
-        {shows.map((show, index) => {
-          return <BandInfo key={index} show={show} />;
-        })}
-        <Button
-          style={{
-            color: "black",
-          }}
-          variant="outlined"
-          size="medium"
-        >
-          Ver mais
-        </Button>
-      </CardContent>
+      <CardActionArea sx={{ width: "100%", height: "100%" }}>
+        <CardContent>
+          <h1>{`${showInfo.day.weekDay}`}</h1>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 }
