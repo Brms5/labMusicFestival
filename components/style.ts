@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+export const Content = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  height: 80%;
+`;
+
 export const MainContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -8,3 +17,10 @@ export const MainContent = styled.div`
   width: 100%;
   height: 80%;
 `;
+
+export const backgroundHome = {
+  backgroundImage: `url(/music-png.png)`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};

@@ -1,9 +1,10 @@
 import React from "react";
-import { HeaderContainer, Content, CardsContainer, Main } from "pages/style";
+import { HeaderContainer, CardsContainer, Main } from "pages/style";
 import Header from "./header/header";
 import { GlobalStyle } from "@ui/style/GlobalStyle";
 import ShowCard from "./showCard/showCard";
-import { MainContent } from "./style";
+import { Content, MainContent, backgroundHome } from "./style";
+import { useRouter } from "next/router";
 
 export interface ShowInfo {
   day: WeekDay;
@@ -52,8 +53,41 @@ for (let i = 0; i < colors.length; i++) {
   shows.push(obj);
 }
 
+interface ColorDay {
+  [key: string]: string;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Layout({ children }: any) {
+  const router = useRouter();
+  console.log(router.query.weekday);
+  const day = router.query.weekday;
+
+  const colorDay = (query: string) => {
+    const dayColorMap: ColorDay = {
+      Monday: colors[0],
+      Tuesday: colors[1],
+      Wednesday: colors[2],
+      Thursday: colors[3],
+      Friday: colors[4],
+      Saturday: colors[5],
+      Sunday: colors[6],
+    };
+
+    return dayColorMap[query] || "";
+  };
+
+  const background = (day: string | string[] | undefined) => {
+    if (day !== undefined && typeof day === "string") {
+      const backgroundDay = {
+        backgroundColor: colorDay(day),
+      };
+      return backgroundDay;
+    } else if (day === undefined) {
+      return backgroundHome;
+    }
+  };
+
   const cardShows = shows.map((showInfo, index) => {
     return <ShowCard key={index} showInfo={showInfo} />;
   });
@@ -64,7 +98,7 @@ export default function Layout({ children }: any) {
       <HeaderContainer>
         <Header />
       </HeaderContainer>
-      <Content>
+      <Content style={background(day)}>
         <CardsContainer>{cardShows}</CardsContainer>
         <MainContent>{children}</MainContent>
       </Content>

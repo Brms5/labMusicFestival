@@ -11,7 +11,7 @@ function InfoCard() {
       <Card
         sx={{
           width: 600,
-          height: 450,
+          height: 350,
           backgroundImage: "url(/background-paper.jpeg)",
         }}
       >
@@ -26,7 +26,7 @@ function InfoCard() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            height: 250,
+            height: 150,
           }}
         >
           <Typography gutterBottom variant="h5" component="div">

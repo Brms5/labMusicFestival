@@ -6,10 +6,9 @@ import { Band } from "@server/schema/band";
 
 interface InputBandInfo {
   show: Show;
-  color: string;
 }
 
-function BandInfo({ show, color }: InputBandInfo) {
+function BandInfo({ show }: InputBandInfo) {
   const [band, setBand] = React.useState<Band>({} as Band);
 
   React.useEffect(() => {
@@ -34,7 +33,6 @@ function BandInfo({ show, color }: InputBandInfo) {
             sx={{
               display: "flex",
               flexDirection: "column",
-              backgroundColor: color,
             }}
           >
             <ListItemText primaryTypographyProps={{ fontSize: "12px" }}>
