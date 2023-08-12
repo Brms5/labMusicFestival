@@ -1,30 +1,16 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import { CardContent, CardHeader } from "./style";
-import { ShowInfo } from "pages";
-import BandInfo from "components/bandInfo/bandInfo";
-import Button from "@mui/material/Button";
-import { showService } from "@ui/services/show";
-import { Show } from "@server/schema/show";
-import { CardActionArea, Divider } from "@mui/material";
+import { CardContent } from "./style";
+import { CardActionArea } from "@mui/material";
+import { useRouter } from "next/router";
+import { ShowInfo } from "components/layout";
 
 interface inputShowCard {
   showInfo: ShowInfo;
 }
 
 export default function ShowCard({ showInfo }: inputShowCard) {
-  const [shows, setShows] = React.useState<Show[]>([]);
-
-  React.useEffect(() => {
-    showService
-      .getShowsByDate(showInfo.day.weekDay)
-      .then((response) => {
-        setShows(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const router = useRouter();
 
   return (
     <Card
@@ -39,7 +25,10 @@ export default function ShowCard({ showInfo }: inputShowCard) {
         backgroundColor: `${showInfo.color}`,
       }}
     >
-      <CardActionArea sx={{ width: "100%", height: "100%" }}>
+      <CardActionArea
+        sx={{ width: "100%", height: "100%" }}
+        onClick={() => router.push(`/shows/${showInfo.day.weekDay}`)}
+      >
         <CardContent>
           <h1>{`${showInfo.day.weekDay}`}</h1>
         </CardContent>

@@ -5,6 +5,7 @@ export const Main = styled.main`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100%;
 `;
 
 export const HeaderContainer = styled.header`
@@ -14,7 +15,7 @@ export const HeaderContainer = styled.header`
   max-width: 1000px;
   width: 100%;
   height: 20%;
-  /* background-color: yellow; */
+  background-color: white;
 `;
 
 export const TitleDiv = styled.div`
@@ -54,8 +55,8 @@ export const Content = styled.section`
 
 export const CardsContainer = styled.div`
   display: flex;
+  justify-content: center;
   max-width: 1000px;
   width: 100%;
-  height: 15%;
-  margin-bottom: 80px;
+  height: 120px;
 `;

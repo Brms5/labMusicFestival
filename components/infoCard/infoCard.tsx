@@ -3,52 +3,41 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Box, CardActionArea } from "@mui/material";
+import { Box } from "@mui/material";
 
 function InfoCard() {
   return (
     <Box>
-      <Card sx={{ width: 600, height: 250, marginBottom: 5 }}>
-        <CardActionArea sx={{ width: "100%", height: "100%" }}>
-          <CardMedia
-            component="img"
-            height="120"
-            image="/rockbands.jpeg"
-            alt="show-audience"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              MUSIC
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              All tickets for the Festival are individually personalised to the
-              named ticket holder and are strictly non-transferable. Security
-              checks are carried out on arrival, and only the specified ticket
-              holder will be admitted to the Festival.
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-      <Card sx={{ width: 600, height: 250 }}>
-        <CardActionArea sx={{ width: "100%", height: "100%" }}>
-          <CardMedia
-            component="img"
-            height="120"
-            // image="/static/images/cards/contemplative-reptile.jpg"
-            // alt="green iguana"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              MUSIC
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              All tickets for the Festival are individually personalised to the
-              named ticket holder and are strictly non-transferable. Security
-              checks are carried out on arrival, and only the specified ticket
-              holder will be admitted to the Festival.
-            </Typography>
-          </CardContent>
-        </CardActionArea>
+      <Card
+        sx={{
+          width: 600,
+          height: 450,
+          backgroundImage: "url(/background-paper.jpeg)",
+        }}
+      >
+        <CardMedia
+          component="img"
+          height="200"
+          image="/rockbands.jpeg"
+          alt="show-audience"
+        />
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: 250,
+          }}
+        >
+          <Typography gutterBottom variant="h5" component="div">
+            MUSIC FESTIVAL
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            This project is a web application that allows users to view a list
+            of shows and their details. The application is built using React,
+            throw the framework Next.js. The application is deployed on Vercel.
+          </Typography>
+        </CardContent>
       </Card>
     </Box>
   );
