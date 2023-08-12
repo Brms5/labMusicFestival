@@ -9,9 +9,9 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: Roboto;
-    max-width: 1200px;
+    /* max-width: 1000px; */
     width: 100%;
-    background-color: #FFF8DC;
+    /* background-color: #24D866; */
   }
   /* NextJS */
   html {
@@ -19,7 +19,8 @@ export const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100%;
+    height: 100vh;
+    /* min-height: 100%; */
   }
   body {
     display: flex;
@@ -28,18 +29,7 @@ export const GlobalStyle = createGlobalStyle`
   #__next {
     display: flex;
     flex: 1;
-    justify-content: center;
-    background-color: white;
+    /* justify-content: center; */
   }
   /* Globals */
-  button,
-  a {
-    text-decoration: none;
-    opacity: 1;
-    transition: .3s;
-    &:hover,
-    &:focus {
-      opacity: .5;
-    }
-  }
 `;

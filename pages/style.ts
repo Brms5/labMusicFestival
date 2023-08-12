@@ -5,14 +5,17 @@ export const Main = styled.main`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100%;
 `;
 
 export const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 1000px;
   width: 100%;
-  height: 10%;
+  height: 20%;
+  background-color: white;
 `;
 
 export const TitleDiv = styled.div`
@@ -42,8 +45,18 @@ export const ProfileDiv = styled.div`
 
 export const Content = styled.section`
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: start;
   align-items: center;
-  width: 80%;
-  height: 60%;
+  width: 100%;
+  height: 80%;
+  background-color: #24d866;
+`;
+
+export const CardsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  max-width: 1000px;
+  width: 100%;
+  height: 120px;
 `;

@@ -10,8 +10,8 @@ export const CardHeader = styled.div`
 
 export const CardContent = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  height: 80%;
+  height: 100%;
   width: 100%;
 `;

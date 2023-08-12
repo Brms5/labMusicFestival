@@ -3,6 +3,6 @@ export const AppBarStyle = {
   height: "100%",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: "white",
+  backgroundColor: "transparent",
   boxShadow: "none",
 };
