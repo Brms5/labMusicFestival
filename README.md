@@ -2,7 +2,7 @@
 
 ## :notebook: About
 
-A festival with several famous bands that will perform over 4 days. The system allows the user to read all the days of the festival, checking the schedules of the shows and details of the bands. Also, as admin, it is possible to register new bands, new shows, edit and delete.  
+A festival with several famous bands that will perform over a entire week. The system allows the user to read all the days of the festival, checking the schedules of the shows and details of the bands. Also, as admin, it is possible to register new bands, new shows, edit and delete.  
 
 ## :heavy_check_mark: Features
 
