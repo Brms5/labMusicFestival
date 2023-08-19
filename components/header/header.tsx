@@ -1,5 +1,4 @@
 import * as React from "react";
-import { GlobalContext } from "src/context/GlobalContext";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -10,17 +9,22 @@ import MenuItem from "@mui/material/MenuItem";
 import { HeaderContainer } from "./style";
 import { useRouter } from "next/router";
 import jwtDecode from "jwt-decode";
+import { GlobalContext } from "src/context/GlobalContext";
 
 function Header() {
-  const { loggedUser, setLoggedUser } = React.useContext(GlobalContext);
-  console.log("LOGGED USER: ", loggedUser);
+  const { userLogged, setUserLogged } = React.useContext(GlobalContext);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
 
   const router = useRouter();
-  const isLoginPage: boolean = router.asPath === "/login";
-  const settings = isLoginPage ? ["Login"] : ["Profile", "Logout"];
+
+  let token;
+  if (typeof window !== "undefined") {
+    token = localStorage.getItem("token");
+  }
+
+  const settings = !token ? ["Login"] : ["Logout"];
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
@@ -33,6 +37,7 @@ function Header() {
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const decodedToken: any = jwtDecode(token);
+        setUserLogged(decodedToken.name[0]);
         const currentTime = Date.now() / 1000; // Convert to seconds
         console.log("DECODE: ", decodedToken);
 
@@ -70,8 +75,8 @@ function Header() {
 
   const logout = () => {
     if (typeof window !== "undefined") {
-      setLoggedUser({ name: "", email: "", role: "" });
       localStorage.removeItem("token");
+      setUserLogged(null);
       router.push("/login");
     } else {
       return false;
@@ -116,7 +121,9 @@ function Header() {
             onClick={handleOpenUserMenu}
             sx={{ p: 0, backgroundColor: "#2B9EC9" }}
           >
-            <Avatar sx={{ bgcolor: "#2B9EC9" }}>{loggedUser.name[0]}</Avatar>
+            <Avatar sx={{ bgcolor: "#2B9EC9" }}>
+              {userLogged ? userLogged[0] : null}
+            </Avatar>
           </IconButton>
         </Tooltip>
         <Menu

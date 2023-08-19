@@ -37,7 +37,7 @@ async function getUserById(request: NextApiRequest, response: NextApiResponse) {
 async function login(request: NextApiRequest, response: NextApiResponse) {
   try {
     const userBody: UserBody = request.body;
-    const user: User = await userRepository.findUserByEmail(userBody.email);
+    const user: User = await userRepository.findUserByEmail(userBody);
 
     const loggedUser: LoggedUser = {
       name: user.name,
@@ -49,6 +49,7 @@ async function login(request: NextApiRequest, response: NextApiResponse) {
       {
         id: user.id,
         email: user.email,
+        name: user.name,
         role: user.role,
       },
       "SECRET_KEY",
@@ -77,10 +78,17 @@ async function registerUser(
     userBody.role = "normal";
     const user = await userRepository.insertNewUser(userBody);
 
+    const loggedUser: LoggedUser = {
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+
     const token = jsonwebtoken.sign(
       {
         id: user.id,
         email: user.email,
+        name: user.name,
         role: user.role,
       },
       "SECRET_KEY",
@@ -90,13 +98,15 @@ async function registerUser(
     );
 
     response.setHeader("token", `${token}`);
-    response.status(201).json(user);
+    response.status(201).json(loggedUser);
   } catch (error) {
-    response.status(400).json({
-      error: {
-        message: "Failed to Create User",
-      },
-    });
+    if (error instanceof Error) {
+      response.status(400).json({
+        error: {
+          message: error.message,
+        },
+      });
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Form } from "./style";
 import {
   Button,
@@ -7,6 +7,7 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  Snackbar,
   TextField,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
@@ -14,13 +15,42 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useRouter } from "next/router";
 import { userService } from "@ui/services/user";
 import { UserLogin } from "@server/types/user";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { GlobalContext } from "src/context/GlobalContext";
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 function Login() {
-  const { setLoggedUser } = useContext(GlobalContext);
+  const { setUserLogged } = React.useContext(GlobalContext);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
+  const disableButtonLogin = () => {
+    return (
+      userEmail.length < 1 ||
+      userPassword.length < 1 ||
+      validateEmail() ||
+      validatePassword()
+    );
+  };
 
   const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
   const validateEmail = () => {
@@ -57,11 +87,12 @@ function Login() {
     userService
       .login(userLogin)
       .then((response) => {
-        setLoggedUser(response);
+        setUserLogged(response.name[0]);
         router.push("/");
       })
       .catch((error) => {
         console.log(error);
+        setOpenAlert(true);
       });
   };
 
@@ -121,9 +152,20 @@ function Login() {
           onClick={() => {
             handleClickSubmit();
           }}
+          disabled={disableButtonLogin()}
         >
           Entrar
         </Button>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={openAlert}
+          autoHideDuration={3000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+            Endereço de e-mail ou senha incorretos.
+          </Alert>
+        </Snackbar>
         <Button
           variant="text"
           style={{

@@ -26,12 +26,14 @@ async function findUserById(userId: string): Promise<User> {
   return parsedData.data;
 }
 
-async function findUserByEmail(email: string): Promise<User> {
+async function findUserByEmail(userBody: UserBody): Promise<User> {
   const { data, error } = await supabase
     .from("NAME_TABLE_USERS")
     .select("*")
-    .eq("email", `${email}`)
+    .eq("email", `${userBody.email}`)
+    .eq("password", `${userBody.password}`)
     .single();
+
   if (error) throw new Error(error.message);
 
   const parsedData = userSchema.safeParse(data);
@@ -46,7 +48,12 @@ async function insertNewUser(userBody: UserBody): Promise<User> {
     .insert([userBody])
     .select("*")
     .single();
-  if (error) throw new Error(error.message);
+  if (error) {
+    if (error.code === "23505") {
+      throw new Error("Email já cadastrado.");
+    }
+    throw new Error(error.message);
+  }
 
   const parsedData = userSchema.safeParse(data);
   if (!parsedData.success) throw new Error(parsedData.error.message);
@@ -57,7 +64,7 @@ async function insertNewUser(userBody: UserBody): Promise<User> {
 interface UserRepository {
   findAllUsers: () => Promise<User[]>;
   findUserById: (userId: string) => Promise<User>;
-  findUserByEmail: (email: string) => Promise<User>;
+  findUserByEmail: (userBody: UserBody) => Promise<User>;
   insertNewUser: (userBody: UserBody) => Promise<User>;
 }
 

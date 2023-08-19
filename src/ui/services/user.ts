@@ -54,15 +54,18 @@ function registerUser(userBody: UserBody): Promise<LoggedUser> {
     },
     body: JSON.stringify(userBody),
   }).then(async (response) => {
-    if (!response.ok) throw new Error("Failed to Register User");
+    if (!response.ok) {
+      return await response.json().then(({ error }) => {
+        throw new Error(error.message);
+      });
+    }
 
-    const userResponse = await response.json();
-
+    const userResponse: LoggedUser = await response.json();
     const token = response.headers.get("token");
     if (!token) throw new Error("Failed to Request Token");
     localStorage.setItem("token", token);
 
-    return userResponse.data;
+    return userResponse;
   });
 }
 
