@@ -6,15 +6,17 @@ A festival with several famous bands that will perform over a entire week. The s
 
 ## :heavy_check_mark: Features
 
-- [ ] Login and registration flow;
-- [X] Create band;
+### MVP
+- [X] Login and registration flow;
 - [X] Read band details;
-- [X] Create a show linked to a day;
-- [X] Request all shows on a date.
-- [ ] Creat ticket;
+- [X] Read shows by event day.
+
+### Completed
+- [X] Create band (Admin);
+- [X] Create a show linked to a day (Admin);
+- [ ] Update a show (Admin);
+- [ ] Create ticket (Admin);
 - [ ] Buy a ticket;
-- [ ] Insert image;
-- [ ] Request all images;
 
 ## :hammer_and_wrench: Technology
 
