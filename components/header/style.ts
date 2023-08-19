@@ -1,8 +1,9 @@
-export const AppBarStyle = {
-  display: "flex",
-  height: "100%",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: "transparent",
-  boxShadow: "none",
-};
+import styled from "styled-components";
+
+export const HeaderContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+`;

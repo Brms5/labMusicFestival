@@ -1,36 +1,62 @@
+import React from "react";
+import { useRouter } from "next/router";
 import { Box, Card, List } from "@mui/material";
 import { Show } from "@server/schema/show";
 import { showService } from "@ui/services/show";
 import BandInfo from "components/bandInfo/bandInfo";
-import { useRouter } from "next/router";
-import React from "react";
+import ShowCard from "components/showCard/showCard";
+import { CardsContainer } from "pages/style";
 
-interface ColorDay {
-  [key: string]: string;
+export interface ShowInfo {
+  day: WeekDay;
+  color: string;
+}
+
+export interface WeekDay {
+  weekDay: string;
+  monthDay: number;
+}
+
+const weekDays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+const monthDays = [24, 25, 26, 27, 28, 29, 30];
+const days: WeekDay[] = [];
+for (let i = 0; i < weekDays.length; i++) {
+  const obj: WeekDay = {
+    weekDay: weekDays[i],
+    monthDay: monthDays[i],
+  };
+  days.push(obj);
 }
 
 const colors = [
-  "#77e2ff",
-  "#fffeb0",
-  "#ff867f",
-  "#42c773",
-  "#ff9ecd",
-  "#ffc155",
-  "#be93ff",
+  "#009EC9",
+  "#FBF504",
+  "#E5291E",
+  "#0E8B3B",
+  "#E75099",
+  "#F6A20F",
+  "#6C45A6",
 ];
-const colorDay = (weekday: string) => {
-  const dayColorMap: ColorDay = {
-    Monday: colors[0],
-    Tuesday: colors[1],
-    Wednesday: colors[2],
-    Thursday: colors[3],
-    Friday: colors[4],
-    Saturday: colors[5],
-    Sunday: colors[6],
+const shows: ShowInfo[] = [];
+for (let i = 0; i < colors.length; i++) {
+  const obj: ShowInfo = {
+    day: days[i],
+    color: colors[i],
   };
+  shows.push(obj);
+}
 
-  return dayColorMap[weekday] || "";
-};
+const cardShows = shows.map((showInfo, index) => {
+  return <ShowCard key={index} showInfo={showInfo} />;
+});
 
 function WeekDay() {
   const [shows, setShows] = React.useState<Show[]>([]);
@@ -51,13 +77,12 @@ function WeekDay() {
   }, [weekday]);
 
   const showBands = shows.map((show, index) => {
-    return (
-      <BandInfo show={show} key={index} color={colorDay(weekday as string)} />
-    );
+    return <BandInfo show={show} key={index} />;
   });
 
   return (
     <>
+      <CardsContainer>{cardShows}</CardsContainer>
       <Box>
         <Card
           sx={{

@@ -43,16 +43,6 @@ export const ProfileDiv = styled.div`
   align-items: center;
 `;
 
-export const Content = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  width: 100%;
-  height: 80%;
-  background-color: #24d866;
-`;
-
 export const CardsContainer = styled.div`
   display: flex;
   justify-content: center;

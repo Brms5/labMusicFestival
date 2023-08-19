@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import { CardContent } from "./style";
 import { CardActionArea } from "@mui/material";
 import { useRouter } from "next/router";
-import { ShowInfo } from "components/layout";
+import { ShowInfo } from "pages";
 
 interface inputShowCard {
   showInfo: ShowInfo;
@@ -11,6 +11,17 @@ interface inputShowCard {
 
 export default function ShowCard({ showInfo }: inputShowCard) {
   const router = useRouter();
+
+  const goToShows = () => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (token == null) {
+        router.push("/login");
+        return;
+      }
+    }
+    router.push(`/shows/${showInfo.day.weekDay}`);
+  };
 
   return (
     <Card
@@ -27,7 +38,7 @@ export default function ShowCard({ showInfo }: inputShowCard) {
     >
       <CardActionArea
         sx={{ width: "100%", height: "100%" }}
-        onClick={() => router.push(`/shows/${showInfo.day.weekDay}`)}
+        onClick={goToShows}
       >
         <CardContent>
           <h1>{`${showInfo.day.weekDay}`}</h1>
