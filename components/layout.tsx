@@ -2,7 +2,7 @@ import React from "react";
 import { HeaderContainer, Main } from "pages/style";
 import Header from "./header/header";
 import { GlobalStyle } from "@ui/style/GlobalStyle";
-import { Content, MainContent, backgroundHome } from "./style";
+import { Content, MainContent, backgroundHome, backgroundLogin } from "./style";
 import { useRouter } from "next/router";
 
 interface ColorDay {
@@ -13,6 +13,7 @@ interface ColorDay {
 export default function Layout({ children }: any) {
   const router = useRouter();
   const day = router.query.weekday;
+  const url = router.pathname;
 
   const colorDay = (query: string) => {
     const dayColorMap: ColorDay = {
@@ -28,14 +29,16 @@ export default function Layout({ children }: any) {
     return dayColorMap[query] || "";
   };
 
-  const background = (day: string | string[] | undefined) => {
+  const background = (day: string | string[] | undefined, url: string) => {
     if (day !== undefined && typeof day === "string") {
       const backgroundDay = {
         backgroundColor: colorDay(day),
       };
       return backgroundDay;
-    } else if (day === undefined) {
+    } else if (url === "/") {
       return backgroundHome;
+    } else if (url === "/login" || url === "/register") {
+      return backgroundLogin;
     }
   };
 
@@ -45,7 +48,7 @@ export default function Layout({ children }: any) {
       <HeaderContainer>
         <Header />
       </HeaderContainer>
-      <Content style={background(day)}>
+      <Content style={background(day, url)}>
         <MainContent>{children}</MainContent>
       </Content>
     </Main>

@@ -88,6 +88,7 @@ function WeekDay() {
           sx={{
             width: 300,
             height: 400,
+            marginBottom: 2,
             backgroundImage: "url(/background-paper.jpeg)",
           }}
         >

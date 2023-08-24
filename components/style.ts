@@ -6,7 +6,7 @@ export const Content = styled.section`
   justify-content: start;
   align-items: center;
   width: 100%;
-  height: 80%;
+  min-height: 80vh;
 `;
 
 export const MainContent = styled.div`
@@ -19,8 +19,16 @@ export const MainContent = styled.div`
 `;
 
 export const backgroundHome = {
+  backgroundImage: `url(/background-paper.jpeg)`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
+
+export const backgroundLogin = {
   backgroundImage: `url(/music-png.png)`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
+  maxWidth: "1200px",
 };
