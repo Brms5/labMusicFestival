@@ -5,6 +5,7 @@ export const bandSchema = schema.object({
   name: schema.string().nonempty(),
   music_genre: schema.string().nonempty(),
   responsible: schema.string().nonempty(),
+  band_image: schema.string().nonempty(),
 });
 
 export type Band = schema.infer<typeof bandSchema>;

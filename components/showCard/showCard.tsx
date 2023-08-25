@@ -26,12 +26,12 @@ export default function ShowCard({ showInfo }: inputShowCard) {
   return (
     <Card
       sx={{
-        width: 140,
+        width: "100%",
         height:
           showInfo.day.monthDay === 25 ||
           showInfo.day.monthDay === 27 ||
           showInfo.day.monthDay === 29
-            ? "80%"
+            ? "85%"
             : "100%",
         backgroundColor: `${showInfo.color}`,
       }}

@@ -87,7 +87,7 @@ function Login() {
     userService
       .login(userLogin)
       .then((response) => {
-        setUserLogged(response.name[0]);
+        setUserLogged(response);
         router.push("/");
       })
       .catch((error) => {

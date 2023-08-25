@@ -10,6 +10,7 @@ import { HeaderContainer } from "./style";
 import { useRouter } from "next/router";
 import jwtDecode from "jwt-decode";
 import { GlobalContext } from "src/context/GlobalContext";
+import { LoggedUser } from "@ui/types/user";
 
 function Header() {
   const { userLogged, setUserLogged } = React.useContext(GlobalContext);
@@ -24,7 +25,7 @@ function Header() {
     token = localStorage.getItem("token");
   }
 
-  const settings = !token ? ["Login"] : ["Logout"];
+  const settings = !token ? ["Login"] : ["Profile", "Logout"];
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
@@ -36,8 +37,8 @@ function Header() {
 
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const decodedToken: any = jwtDecode(token);
-        setUserLogged(decodedToken.name[0]);
+        const decodedToken: LoggedUser = jwtDecode(token);
+        setUserLogged(decodedToken);
         const currentTime = Date.now() / 1000; // Convert to seconds
         console.log("DECODE: ", decodedToken);
 
@@ -88,7 +89,9 @@ function Header() {
     if (setting === "Logout") {
       logout();
     } else if (setting === "Profile") {
-      router.push(`/users/[userid]`);
+      if (!userLogged) return;
+      console.log("userLogged: ", userLogged);
+      router.push(`/users/${userLogged.id}`);
     } else if (setting === "Login") {
       router.push("/login");
     }
@@ -98,12 +101,8 @@ function Header() {
     <HeaderContainer>
       <Typography
         variant="h2"
-        // noWrap
-        // component="a"
         onClick={goHomePage}
         sx={{
-          mr: 2,
-          // display: { xs: "none", md: "flex" },
           fontFamily: "monospace",
           fontWeight: 700,
           letterSpacing: ".3rem",
@@ -122,7 +121,7 @@ function Header() {
             sx={{ p: 0, backgroundColor: "#2B9EC9" }}
           >
             <Avatar sx={{ bgcolor: "#2B9EC9" }}>
-              {userLogged ? userLogged[0] : null}
+              {userLogged?.name ? userLogged.name[0] : null}
             </Avatar>
           </IconButton>
         </Tooltip>
