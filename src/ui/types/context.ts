@@ -1,8 +1,10 @@
+import { LoggedUser } from "./user";
+
 export interface GlobalContextProps {
   children: React.ReactNode;
 }
 
 export interface GlobalContextData {
-  userLogged: string | null;
-  setUserLogged: (loggedUser: string | null) => void;
+  userLogged: LoggedUser | null;
+  setUserLogged: (loggedUser: LoggedUser | null) => void;
 }

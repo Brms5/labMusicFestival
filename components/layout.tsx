@@ -10,7 +10,7 @@ interface ColorDay {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function Layout({ children }: any) {
+function Layout({ children }: any) {
   const router = useRouter();
   const day = router.query.weekday;
   const url = router.pathname;
@@ -37,7 +37,11 @@ export default function Layout({ children }: any) {
       return backgroundDay;
     } else if (url === "/") {
       return backgroundHome;
-    } else if (url === "/login" || url === "/register") {
+    } else if (
+      url === "/login" ||
+      url === "/register" ||
+      url === `/users/[userid]`
+    ) {
       return backgroundLogin;
     }
   };
@@ -54,3 +58,5 @@ export default function Layout({ children }: any) {
     </Main>
   );
 }
+
+export default Layout;

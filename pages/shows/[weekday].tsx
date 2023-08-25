@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Box, Card, List } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import { Show } from "@server/schema/show";
 import { showService } from "@ui/services/show";
 import BandInfo from "components/bandInfo/bandInfo";
@@ -45,16 +45,16 @@ const colors = [
   "#F6A20F",
   "#6C45A6",
 ];
-const shows: ShowInfo[] = [];
+const daysAndColors: ShowInfo[] = [];
 for (let i = 0; i < colors.length; i++) {
   const obj: ShowInfo = {
     day: days[i],
     color: colors[i],
   };
-  shows.push(obj);
+  daysAndColors.push(obj);
 }
 
-const cardShows = shows.map((showInfo, index) => {
+const cardShows = daysAndColors.map((showInfo, index) => {
   return <ShowCard key={index} showInfo={showInfo} />;
 });
 
@@ -63,6 +63,10 @@ function WeekDay() {
 
   const router = useRouter();
   const { weekday } = router.query;
+
+  const weekDayColor = daysAndColors.find((day) => {
+    return day.day.weekDay === weekday;
+  });
 
   React.useEffect(() => {
     setShows([]);
@@ -77,26 +81,35 @@ function WeekDay() {
   }, [weekday]);
 
   const showBands = shows.map((show, index) => {
-    return <BandInfo show={show} key={index} />;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          maxWidth: "610px",
+        }}
+        key={index}
+      >
+        <Card
+          sx={{
+            width: "100%",
+            height: "100%",
+            marginBottom: 2,
+            backgroundImage: "url(/background-paper.jpeg)",
+          }}
+        >
+          <BandInfo show={show} weekDayColor={weekDayColor?.color} />
+        </Card>
+      </Box>
+    );
   });
 
   return (
     <>
       <CardsContainer>{cardShows}</CardsContainer>
-      <Box>
-        <Card
-          sx={{
-            width: 300,
-            height: 400,
-            marginBottom: 2,
-            backgroundImage: "url(/background-paper.jpeg)",
-          }}
-        >
-          <List component="nav" aria-label="mailbox folders">
-            {shows.length > 0 ? showBands : <div>NO SHOWS...</div>}
-          </List>
-        </Card>
-      </Box>
+      {showBands}
     </>
   );
 }

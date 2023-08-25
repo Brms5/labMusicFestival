@@ -47,7 +47,7 @@ function InfoCard() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "#38B3EE",
+              color: "gray",
               textDecoration: "none",
             }}
           >
