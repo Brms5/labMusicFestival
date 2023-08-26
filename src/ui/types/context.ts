@@ -7,4 +7,6 @@ export interface GlobalContextProps {
 export interface GlobalContextData {
   userLogged: LoggedUser | null;
   setUserLogged: (loggedUser: LoggedUser | null) => void;
+  userAdmin: boolean;
+  setUserAdmin: (userAdmin: boolean) => void;
 }

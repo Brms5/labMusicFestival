@@ -35,13 +35,9 @@ function Layout({ children }: any) {
         backgroundColor: colorDay(day),
       };
       return backgroundDay;
-    } else if (url === "/") {
+    } else if (url === "/" || url === "/users/[userid]") {
       return backgroundHome;
-    } else if (
-      url === "/login" ||
-      url === "/register" ||
-      url === `/users/[userid]`
-    ) {
+    } else if (url === "/login" || url === "/register") {
       return backgroundLogin;
     }
   };

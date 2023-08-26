@@ -1,6 +1,6 @@
 import { supabase } from "@server/infra/database/supabase";
 import { Band, bandSchema } from "@server/schema/band";
-import { BandBody } from "@server/types/band";
+import { CreateBand } from "@server/types/band";
 
 async function findAllBands(): Promise<Band[]> {
   const { data, error } = await supabase.from("NAME_TABLE_BANDS").select("*");
@@ -26,7 +26,7 @@ async function findBandById(bandId: string): Promise<Band> {
   return parsedData.data;
 }
 
-async function insertNewBand(bandBody: BandBody): Promise<Band> {
+async function insertNewBand(bandBody: CreateBand): Promise<Band> {
   const { data, error } = await supabase
     .from("NAME_TABLE_BANDS")
     .insert([bandBody])
@@ -43,7 +43,7 @@ async function insertNewBand(bandBody: BandBody): Promise<Band> {
 interface BandRepository {
   findAllBands: () => Promise<Band[]>;
   findBandById: (bandId: string) => Promise<Band>;
-  insertNewBand: (bandBody: BandBody) => Promise<Band>;
+  insertNewBand: (bandBody: CreateBand) => Promise<Band>;
 }
 
 export const bandRepository: BandRepository = {

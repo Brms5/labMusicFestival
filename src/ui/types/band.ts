@@ -1,4 +1,5 @@
-export interface CreateBand {
+export interface BandResponse {
+  id: string;
   name: string;
   music_genre: string;
   responsible: string;
