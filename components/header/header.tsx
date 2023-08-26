@@ -13,7 +13,8 @@ import { GlobalContext } from "src/context/GlobalContext";
 import { LoggedUser } from "@ui/types/user";
 
 function Header() {
-  const { userLogged, setUserLogged } = React.useContext(GlobalContext);
+  const { userLogged, setUserLogged, setUserAdmin } =
+    React.useContext(GlobalContext);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -39,6 +40,7 @@ function Header() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const decodedToken: LoggedUser = jwtDecode(token);
         setUserLogged(decodedToken);
+        setUserAdmin(decodedToken.role === "admin");
         const currentTime = Date.now() / 1000; // Convert to seconds
         console.log("DECODE: ", decodedToken);
 
@@ -50,6 +52,7 @@ function Header() {
       } catch (error) {
         // Handle token decoding error if necessary
         console.error("Error decoding token:", error);
+        setUserLogged(null);
         router.push("/login");
       }
     }

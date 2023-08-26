@@ -1,5 +1,5 @@
 import { bandRepository } from "@server/repository/BandRepository";
-import { BandBody } from "@server/types/band";
+import { CreateBand } from "@server/types/band";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function getBands(request: NextApiRequest, response: NextApiResponse) {
@@ -33,7 +33,7 @@ async function getBandById(request: NextApiRequest, response: NextApiResponse) {
 
 async function createBand(request: NextApiRequest, response: NextApiResponse) {
   try {
-    const bandBody: BandBody = request.body;
+    const bandBody: CreateBand = request.body;
     const band = await bandRepository.insertNewBand(bandBody);
     response.status(201).json(band);
   } catch (error) {

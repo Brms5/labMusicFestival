@@ -1,6 +1,6 @@
 import { showRepository } from "@server/repository/ShowRepository";
 import { Show } from "@server/schema/show";
-import { ShowBody } from "@server/types/show";
+import { CreateShowInput } from "@server/types/show";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function getShows(
@@ -43,7 +43,7 @@ async function createShow(
   response: NextApiResponse
 ): Promise<void> {
   try {
-    const showBody = request.body as ShowBody;
+    const showBody = request.body as CreateShowInput;
     showRepository.insertNewShow(showBody).then((show: Show) => {
       response.status(200).json(show);
     });

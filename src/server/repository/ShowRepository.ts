@@ -1,6 +1,6 @@
 import { supabase } from "@server/infra/database/supabase";
 import { Show, showSchema } from "@server/schema/show";
-import { ShowBody } from "@server/types/show";
+import { CreateShowInput } from "@server/types/show";
 
 async function findAllShows(): Promise<Show[]> {
   const { data, error } = await supabase.from("NAME_TABLE_SHOWS").select("*");
@@ -25,7 +25,7 @@ async function findShowsByDate(weekDay: string): Promise<Show[]> {
   return parsedData.data;
 }
 
-async function insertNewShow(showBody: ShowBody): Promise<Show> {
+async function insertNewShow(showBody: CreateShowInput): Promise<Show> {
   console.log("SHOW REPOSITORIO: ", showBody);
   const { data, error } = await supabase
     .from("NAME_TABLE_SHOWS")
@@ -45,7 +45,7 @@ async function insertNewShow(showBody: ShowBody): Promise<Show> {
 interface ShowRepository {
   findAllShows: () => Promise<Show[]>;
   findShowsByDate: (weekDay: string) => Promise<Show[]>;
-  insertNewShow: (showBody: ShowBody) => Promise<Show>;
+  insertNewShow: (showBody: CreateShowInput) => Promise<Show>;
 }
 
 export const showRepository: ShowRepository = {

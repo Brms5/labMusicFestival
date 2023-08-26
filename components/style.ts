@@ -27,7 +27,7 @@ export const backgroundHome = {
 
 export const backgroundLogin = {
   backgroundImage: `url(/music-png.png)`,
-  backgroundSize: "cover",
+  backgroundSize: "contain",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   maxWidth: "1200px",
