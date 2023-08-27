@@ -5,3 +5,10 @@ export interface BandResponse {
   responsible: string;
   band_image: string;
 }
+
+export interface CreateBandBody {
+  name: string;
+  music_genre: string;
+  responsible: string;
+  band_image: string;
+}
