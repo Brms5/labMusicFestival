@@ -1,13 +1,32 @@
 import React from "react";
-import { Button, TextField, Typography } from "@mui/material";
-import { CreateBand } from "@server/types/band";
+import { Button, TextField, Tooltip, Typography } from "@mui/material";
+import { bandService } from "@ui/services/band";
+import { CreateBandBody } from "@ui/types/band";
+import { MessageInfo } from "pages/users/[userid]";
 
 interface CreateBandProps {
   userAdmin: boolean;
+  setNewBand: (newBand: boolean) => void;
+  newBand: boolean;
+  setOpenAlert: (openAlert: boolean) => void;
+  setMessageInfo: (messageInfo: MessageInfo) => void;
 }
 
-function CreateBand({ userAdmin }: CreateBandProps) {
-  const [bandBody, setBandBody] = React.useState<CreateBand>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function hasEmptyProperties(obj: any): boolean {
+  return Object.values(obj).some((value) => {
+    return value === "";
+  });
+}
+
+function CreateBand({
+  userAdmin,
+  setNewBand,
+  newBand,
+  setOpenAlert,
+  setMessageInfo,
+}: CreateBandProps) {
+  const [bandBody, setBandBody] = React.useState<CreateBandBody>({
     name: "",
     music_genre: "",
     responsible: "",
@@ -23,6 +42,33 @@ function CreateBand({ userAdmin }: CreateBandProps) {
       [name]: value,
     });
   };
+
+  const onClick = async (bandBody: CreateBandBody) => {
+    const band = await bandService.getBandByName(bandBody.name);
+    if (band) {
+      setOpenAlert(true);
+      setMessageInfo({
+        message: "Band already exists!",
+        severity: "error",
+      });
+      return;
+    }
+    await bandService.createBand(bandBody);
+    setBandBody({
+      name: "",
+      music_genre: "",
+      responsible: "",
+      band_image: "",
+    });
+    setNewBand(!newBand);
+    setOpenAlert(true);
+    setMessageInfo({
+      message: "Band created successfully!",
+      severity: "success",
+    });
+  };
+
+  const disableButton: boolean = !userAdmin || hasEmptyProperties(bandBody);
 
   return (
     <div
@@ -77,14 +123,16 @@ function CreateBand({ userAdmin }: CreateBandProps) {
         label="Singer"
         variant="standard"
       />
-      <TextField
-        id="standard-basic"
-        name="band_image"
-        value={bandBody.band_image}
-        onChange={handleChange}
-        label="Image"
-        variant="standard"
-      />
+      <Tooltip title="Use image address">
+        <TextField
+          id="standard-basic"
+          name="band_image"
+          value={bandBody.band_image}
+          onChange={handleChange}
+          label="Image"
+          variant="standard"
+        />
+      </Tooltip>
       <Button
         sx={{
           marginTop: "20px",
@@ -92,7 +140,8 @@ function CreateBand({ userAdmin }: CreateBandProps) {
           borderBlockColor: "#0E8B3B",
         }}
         variant="outlined"
-        disabled={!userAdmin}
+        disabled={disableButton}
+        onClick={() => onClick(bandBody)}
       >
         Create
       </Button>

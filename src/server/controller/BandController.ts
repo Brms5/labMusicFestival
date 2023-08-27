@@ -31,6 +31,41 @@ async function getBandById(request: NextApiRequest, response: NextApiResponse) {
   }
 }
 
+async function getBandsWithoutShow(
+  request: NextApiRequest,
+  response: NextApiResponse
+) {
+  try {
+    bandRepository.findAllBandsWithoutShow().then((bands) => {
+      response.status(200).json(bands);
+    });
+  } catch (error) {
+    response.status(400).json({
+      error: {
+        message: "Failed to Request Bands",
+      },
+    });
+  }
+}
+
+async function getBandByName(
+  request: NextApiRequest,
+  response: NextApiResponse
+) {
+  try {
+    const bandName = request.query.bandName;
+    bandRepository.findBandByName(bandName as string).then((band) => {
+      response.status(200).json(band);
+    });
+  } catch (error) {
+    response.status(400).json({
+      error: {
+        message: "Failed to Request Band",
+      },
+    });
+  }
+}
+
 async function createBand(request: NextApiRequest, response: NextApiResponse) {
   try {
     const bandBody: CreateBand = request.body;
@@ -48,11 +83,18 @@ async function createBand(request: NextApiRequest, response: NextApiResponse) {
 interface BandController {
   getBands: (request: NextApiRequest, response: NextApiResponse) => void;
   getBandById: (request: NextApiRequest, response: NextApiResponse) => void;
+  getBandsWithoutShow: (
+    request: NextApiRequest,
+    response: NextApiResponse
+  ) => void;
+  getBandByName: (request: NextApiRequest, response: NextApiResponse) => void;
   createBand: (request: NextApiRequest, response: NextApiResponse) => void;
 }
 
 export const bandController: BandController = {
   getBands,
   getBandById,
+  getBandsWithoutShow,
+  getBandByName,
   createBand,
 };
