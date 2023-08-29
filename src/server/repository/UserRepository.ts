@@ -61,11 +61,27 @@ async function insertNewUser(userBody: CreateUser): Promise<User> {
   return parsedData.data;
 }
 
+async function alterUserRole(userId: string, role: string): Promise<User> {
+  const { data, error } = await supabase
+    .from("NAME_TABLE_USERS")
+    .update({ role })
+    .eq("id", `${userId}`)
+    .select("*")
+    .single();
+  if (error) throw new Error(error.message);
+
+  const parsedData = userSchema.safeParse(data);
+  if (!parsedData.success) throw new Error(parsedData.error.message);
+
+  return parsedData.data;
+}
+
 interface UserRepository {
   findAllUsers: () => Promise<User[]>;
   findUserById: (userId: string) => Promise<User>;
   findUserByEmail: (userBody: CreateUser) => Promise<User>;
   insertNewUser: (userBody: CreateUser) => Promise<User>;
+  alterUserRole: (userId: string, role: string) => Promise<User>;
 }
 
 export const userRepository: UserRepository = {
@@ -73,4 +89,5 @@ export const userRepository: UserRepository = {
   findUserById,
   findUserByEmail,
   insertNewUser,
+  alterUserRole,
 };
