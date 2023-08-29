@@ -111,11 +111,33 @@ async function registerUser(
   }
 }
 
+async function updateUserRole(
+  request: NextApiRequest,
+  response: NextApiResponse
+) {
+  try {
+    const userId = request.query.userid;
+    const role = request.body.role;
+    userRepository.alterUserRole(userId as string, role as string).then(() => {
+      response.status(200).json({
+        message: "User Role Updated",
+      });
+    });
+  } catch (error) {
+    response.status(400).json({
+      error: {
+        message: "Failed to Update User Role",
+      },
+    });
+  }
+}
+
 interface UserController {
   getUsers: (request: NextApiRequest, response: NextApiResponse) => void;
   getUserById: (request: NextApiRequest, response: NextApiResponse) => void;
   login: (request: NextApiRequest, response: NextApiResponse) => void;
   registerUser: (request: NextApiRequest, response: NextApiResponse) => void;
+  updateUserRole: (request: NextApiRequest, response: NextApiResponse) => void;
 }
 
 export const userController: UserController = {
@@ -123,4 +145,5 @@ export const userController: UserController = {
   getUserById,
   login,
   registerUser,
+  updateUserRole,
 };

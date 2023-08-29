@@ -69,11 +69,32 @@ function registerUser(userBody: CreateUser): Promise<LoggedUser> {
   });
 }
 
+function updateUserRole(userId: string, role: string): Promise<User> {
+  return fetch(`/api/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      // token: localStorage.getItem("token") || "",
+    },
+    body: JSON.stringify({ role }),
+  }).then(async (response) => {
+    if (!response.ok) {
+      return await response.json().then(({ error }) => {
+        throw new Error(error.message);
+      });
+    }
+
+    const userResponse: User = await response.json();
+    return userResponse;
+  });
+}
+
 interface UserService {
   getUsers: () => Promise<User[]>;
   getUserById: (userId: string) => Promise<User>;
   login: (userBody: UserLogin) => Promise<LoggedUser>;
   registerUser: (userBody: CreateUser) => Promise<LoggedUser>;
+  updateUserRole: (userId: string, role: string) => Promise<User>;
 }
 
 export const userService: UserService = {
@@ -81,4 +102,5 @@ export const userService: UserService = {
   getUserById,
   login,
   registerUser,
+  updateUserRole,
 };

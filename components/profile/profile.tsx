@@ -5,9 +5,11 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
+import { userService } from "@ui/services/user";
 
 interface ProfileProps {
   userLogged: {
+    id: string;
     name: string;
     email: string;
     role: string;
@@ -18,6 +20,11 @@ interface ProfileProps {
 
 function Profile({ userLogged, userAdmin, setUserAdmin }: ProfileProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!userLogged) return;
+    userService.updateUserRole(
+      userLogged.id,
+      userLogged.role === "admin" ? "user" : "admin"
+    );
     setUserAdmin(event.target.checked);
   };
 
