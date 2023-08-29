@@ -14,8 +14,8 @@ interface ProfileProps {
     email: string;
     role: string;
   } | null;
-  userAdmin: boolean;
-  setUserAdmin: (userAdmin: boolean) => void;
+  userAdmin: boolean | undefined;
+  setUserAdmin: (userAdmin: boolean | undefined) => void;
 }
 
 function Profile({ userLogged, userAdmin, setUserAdmin }: ProfileProps) {

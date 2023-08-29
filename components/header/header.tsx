@@ -20,6 +20,7 @@ function Header() {
   );
 
   const router = useRouter();
+  const url = router.pathname;
 
   let token;
   if (typeof window !== "undefined") {
@@ -56,7 +57,7 @@ function Header() {
         router.push("/login");
       }
     }
-  }, []);
+  }, [url]);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);

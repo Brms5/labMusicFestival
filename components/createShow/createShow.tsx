@@ -15,7 +15,7 @@ import { MessageInfo, NumberShowsByDate } from "pages/users/[userid]";
 
 interface CreateShowProps {
   bands: BandResponse[];
-  userAdmin: boolean;
+  userAdmin: boolean | undefined;
   setOpenAlert: (openAlert: boolean) => void;
   setMessageInfo: (messageInfo: MessageInfo) => void;
   numberShowsByDate: NumberShowsByDate;

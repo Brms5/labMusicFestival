@@ -5,7 +5,6 @@ interface InputBandImage {
 }
 
 function BandImage({ bandImage }: InputBandImage) {
-  console.log(bandImage);
   return (
     <div style={{ overflow: "hidden" }}>
       <img
