@@ -7,7 +7,7 @@ export const GlobalContext = createContext({} as GlobalContextData);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const GlobalProvider = ({ children }: any) => {
   const [userLogged, setUserLogged] = useState<LoggedUser | null>(null);
-  const [userAdmin, setUserAdmin] = useState<boolean>(false);
+  const [userAdmin, setUserAdmin] = useState<boolean | undefined>(undefined);
 
   const contextValue = useMemo(
     () => ({ userLogged, setUserLogged, userAdmin, setUserAdmin }),

@@ -5,7 +5,7 @@ import { CreateBandBody } from "@ui/types/band";
 import { MessageInfo } from "pages/users/[userid]";
 
 interface CreateBandProps {
-  userAdmin: boolean;
+  userAdmin: boolean | undefined;
   setNewBand: (newBand: boolean) => void;
   newBand: boolean;
   setOpenAlert: (openAlert: boolean) => void;

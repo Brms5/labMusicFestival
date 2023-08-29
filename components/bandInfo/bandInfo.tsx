@@ -12,7 +12,7 @@ interface InputBandInfo {
 
 function BandInfo({ show, weekDayColor }: InputBandInfo) {
   const [band, setBand] = React.useState<Band>({} as Band);
-  console.log(weekDayColor);
+
   React.useEffect(() => {
     setBand({} as Band);
     bandService
