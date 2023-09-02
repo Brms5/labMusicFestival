@@ -63,7 +63,7 @@ async function deleteShow(
   try {
     const showId = request.query.id as string;
     showRepository.removeShow(showId).then(() => {
-      response.status(200).json({
+      response.status(204).json({
         message: "Show Deleted",
       });
     });

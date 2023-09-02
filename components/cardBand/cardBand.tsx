@@ -1,25 +1,26 @@
 import React from "react";
 import { ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
-import { BandResponse } from "@ui/types/band";
-import { MessageInfo, NumberShowsByDate } from "pages/users/[userid]";
+import { MessageInfo } from "pages/users/[userid]";
 import CreateBand from "./createBand/createBand";
+import { BandResponse } from "@ui/types/band";
+import DeleteBand from "./deleteBand/deleteBand";
 
 interface CardBandProps {
   bands: BandResponse[];
   userAdmin: boolean | undefined;
-  setOpenAlert: (openAlert: boolean) => void;
-  setMessageInfo: (messageInfo: MessageInfo) => void;
-  numberShowsByDate: NumberShowsByDate;
   setNewBand: (newBand: boolean) => void;
   newBand: boolean;
+  setOpenAlert: (openAlert: boolean) => void;
+  setMessageInfo: (messageInfo: MessageInfo) => void;
 }
 
 function CardBand({
+  bands,
   userAdmin,
-  setOpenAlert,
-  setMessageInfo,
   setNewBand,
   newBand,
+  setOpenAlert,
+  setMessageInfo,
 }: CardBandProps) {
   const [alignment, setAlignment] = React.useState("Create");
 
@@ -39,7 +40,7 @@ function CardBand({
         alignItems: "center",
         width: "280px",
         height: "450px",
-        border: "3px solid #E75099",
+        border: "3px solid green",
       }}
     >
       <Typography
@@ -50,11 +51,11 @@ function CardBand({
           fontFamily: "monospace",
           fontWeight: 700,
           letterSpacing: ".3rem",
-          color: "#E75099",
+          color: "#0E8B3B",
           textDecoration: "none",
         }}
       >
-        Show
+        Band
       </Typography>
       <ToggleButtonGroup
         color="primary"
@@ -71,15 +72,20 @@ function CardBand({
       {alignment === "Create" ? (
         <CreateBand
           userAdmin={userAdmin}
-          setOpenAlert={setOpenAlert}
-          setMessageInfo={setMessageInfo}
           setNewBand={setNewBand}
           newBand={newBand}
+          setOpenAlert={setOpenAlert}
+          setMessageInfo={setMessageInfo}
         />
       ) : alignment === "Update" ? (
         <div>Update</div>
       ) : (
-        <div>Delete</div>
+        <DeleteBand
+          bands={bands}
+          userAdmin={userAdmin}
+          setOpenAlert={setOpenAlert}
+          setMessageInfo={setMessageInfo}
+        />
       )}
     </div>
   );

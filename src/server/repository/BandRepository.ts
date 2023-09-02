@@ -82,6 +82,15 @@ async function insertShowIdInBand(showId: string, bandId: string) {
   if (error) throw new Error(error.message);
 }
 
+async function removeBandById(bandId: string) {
+  const { error } = await supabase
+    .from("NAME_TABLE_BANDS")
+    .delete()
+    .eq("id", `${bandId}`);
+
+  if (error) throw new Error(error.message);
+}
+
 interface BandRepository {
   findAllBands: () => Promise<Band[]>;
   findBandById: (bandId: string) => Promise<Band>;
@@ -89,6 +98,7 @@ interface BandRepository {
   findBandByName: (bandName: string) => Promise<Band | null>;
   insertNewBand: (bandBody: CreateBand) => Promise<Band>;
   insertShowIdInBand: (showId: string, bandId: string) => Promise<void>;
+  removeBandById: (bandId: string) => Promise<void>;
 }
 
 export const bandRepository: BandRepository = {
@@ -98,4 +108,5 @@ export const bandRepository: BandRepository = {
   findBandByName,
   insertNewBand,
   insertShowIdInBand,
+  removeBandById,
 };

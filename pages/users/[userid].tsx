@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GlobalContext } from "src/context/GlobalContext";
 import Profile from "components/profile/profile";
-import CreateBand from "components/cardBand/createBand/createBand";
 import { BandShowContainer, UserPageContainer } from "./style";
 import { bandService } from "@ui/services/band";
 import { BandResponse } from "@ui/types/band";
@@ -10,6 +9,7 @@ import { Snackbar } from "@mui/material";
 import { showService } from "@ui/services/show";
 import { Show } from "@server/schema/show";
 import CardShow from "components/cardShow/cardShow";
+import CardBand from "components/cardBand/cardBand";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -101,7 +101,8 @@ function UserPage() {
         setUserAdmin={setUserAdmin}
       />
       <BandShowContainer>
-        <CreateBand
+        <CardBand
+          bands={bands}
           userAdmin={userAdmin}
           setNewBand={setNewBand}
           newBand={newBand}
