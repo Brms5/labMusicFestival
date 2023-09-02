@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GlobalContext } from "src/context/GlobalContext";
 import Profile from "components/profile/profile";
-import CreateBand from "components/createBand/createBand";
+import CreateBand from "components/cardBand/createBand/createBand";
 import { BandShowContainer, UserPageContainer } from "./style";
 import { bandService } from "@ui/services/band";
 import { BandResponse } from "@ui/types/band";
