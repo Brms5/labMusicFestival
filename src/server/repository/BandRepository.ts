@@ -39,14 +39,19 @@ async function findAllBandsWithoutShow(): Promise<Band[]> {
   return parsedData.data;
 }
 
-async function findBandByName(bandName: string): Promise<Band> {
+async function findBandByName(bandName: string): Promise<Band | null> {
   const { data, error } = await supabase
     .from("NAME_TABLE_BANDS")
     .select("*")
     .eq("name", `${bandName}`)
     .single();
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    if (error.code === "PGRST116") {
+      return null;
+    }
+    throw new Error(error.message);
+  }
 
   const parsedData = bandSchema.safeParse(data);
   if (!parsedData.success) throw new Error(parsedData.error.message);
@@ -77,13 +82,23 @@ async function insertShowIdInBand(showId: string, bandId: string) {
   if (error) throw new Error(error.message);
 }
 
+async function removeBandById(bandId: string) {
+  const { error } = await supabase
+    .from("NAME_TABLE_BANDS")
+    .delete()
+    .eq("id", `${bandId}`);
+
+  if (error) throw new Error(error.message);
+}
+
 interface BandRepository {
   findAllBands: () => Promise<Band[]>;
   findBandById: (bandId: string) => Promise<Band>;
   findAllBandsWithoutShow: () => Promise<Band[]>;
-  findBandByName: (bandName: string) => Promise<Band>;
+  findBandByName: (bandName: string) => Promise<Band | null>;
   insertNewBand: (bandBody: CreateBand) => Promise<Band>;
   insertShowIdInBand: (showId: string, bandId: string) => Promise<void>;
+  removeBandById: (bandId: string) => Promise<void>;
 }
 
 export const bandRepository: BandRepository = {
@@ -93,4 +108,5 @@ export const bandRepository: BandRepository = {
   findBandByName,
   insertNewBand,
   insertShowIdInBand,
+  removeBandById,
 };

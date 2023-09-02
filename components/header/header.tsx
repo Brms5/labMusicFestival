@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import jwtDecode from "jwt-decode";
 import { GlobalContext } from "src/context/GlobalContext";
 import { LoggedUser } from "@ui/types/user";
+import { userService } from "@ui/services/user";
 
 function Header() {
   const { userLogged, setUserLogged, setUserAdmin } =
@@ -33,7 +34,9 @@ function Header() {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("token");
       if (token == null) {
-        router.push("/login");
+        if (url !== "/login" && url !== "/register") {
+          router.push("/login");
+        }
         return;
       }
 
@@ -41,9 +44,11 @@ function Header() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const decodedToken: LoggedUser = jwtDecode(token);
         setUserLogged(decodedToken);
-        setUserAdmin(decodedToken.role === "admin");
+        userService.getUserById(decodedToken.id).then((user) => {
+          setUserAdmin(user.admin);
+        });
+
         const currentTime = Date.now() / 1000; // Convert to seconds
-        console.log("DECODE: ", decodedToken);
 
         if (decodedToken.exp < currentTime) {
           // Token has expired

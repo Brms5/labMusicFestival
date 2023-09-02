@@ -80,6 +80,25 @@ async function createBand(request: NextApiRequest, response: NextApiResponse) {
   }
 }
 
+async function deleteBandById(
+  request: NextApiRequest,
+  response: NextApiResponse
+) {
+  try {
+    const bandId = request.query.bandId;
+    await bandRepository.removeBandById(bandId as string);
+    response.status(204).json({
+      message: "Band Deleted",
+    });
+  } catch (error) {
+    response.status(400).json({
+      error: {
+        message: "Failed to Delete Band",
+      },
+    });
+  }
+}
+
 interface BandController {
   getBands: (request: NextApiRequest, response: NextApiResponse) => void;
   getBandById: (request: NextApiRequest, response: NextApiResponse) => void;
@@ -89,6 +108,7 @@ interface BandController {
   ) => void;
   getBandByName: (request: NextApiRequest, response: NextApiResponse) => void;
   createBand: (request: NextApiRequest, response: NextApiResponse) => void;
+  deleteBandById: (request: NextApiRequest, response: NextApiResponse) => void;
 }
 
 export const bandController: BandController = {
@@ -97,4 +117,5 @@ export const bandController: BandController = {
   getBandsWithoutShow,
   getBandByName,
   createBand,
+  deleteBandById,
 };

@@ -20,7 +20,7 @@ async function getUsers(request: NextApiRequest, response: NextApiResponse) {
 
 async function getUserById(request: NextApiRequest, response: NextApiResponse) {
   try {
-    const userId = request.query.userId;
+    const userId = request.query.userid;
     userRepository.findUserById(userId as string).then((user) => {
       response.status(200).json(user);
     });
@@ -42,7 +42,7 @@ async function login(request: NextApiRequest, response: NextApiResponse) {
       id: user.id,
       name: user.name,
       email: user.email,
-      role: user.role,
+      admin: user.admin,
     };
 
     const token = jsonwebtoken.sign(
@@ -50,7 +50,7 @@ async function login(request: NextApiRequest, response: NextApiResponse) {
         id: user.id,
         email: user.email,
         name: user.name,
-        role: user.role,
+        admin: user.admin,
       },
       "SECRET_KEY",
       {
@@ -75,14 +75,13 @@ async function registerUser(
 ) {
   try {
     const userBody: CreateUser = request.body;
-    userBody.role = "normal";
     const user = await userRepository.insertNewUser(userBody);
 
     const loggedUser: LoggedUserResponse = {
       id: user.id,
       name: user.name,
       email: user.email,
-      role: user.role,
+      admin: user.admin,
     };
 
     const token = jsonwebtoken.sign(
@@ -90,7 +89,7 @@ async function registerUser(
         id: user.id,
         email: user.email,
         name: user.name,
-        role: user.role,
+        admin: user.admin,
       },
       "SECRET_KEY",
       {
@@ -117,12 +116,14 @@ async function updateUserRole(
 ) {
   try {
     const userId = request.query.userid;
-    const role = request.body.role;
-    userRepository.alterUserRole(userId as string, role as string).then(() => {
-      response.status(200).json({
-        message: "User Role Updated",
+    const admin = request.body.admin;
+    userRepository
+      .alterUserRole(userId as string, admin as boolean)
+      .then(() => {
+        response.status(200).json({
+          message: "User Role Updated",
+        });
       });
-    });
   } catch (error) {
     response.status(400).json({
       error: {

@@ -14,6 +14,11 @@ export default async function handler(
     return;
   }
 
+  if (request.method === "DELETE") {
+    await showController.deleteShow(request, response);
+    return;
+  }
+
   if (request.method === "POST") {
     await showController.createShow(request, response);
     return;

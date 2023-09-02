@@ -5,7 +5,7 @@ export const userSchema = schema.object({
   name: schema.string().nonempty(),
   email: schema.string().email(),
   password: schema.string().nonempty(),
-  role: schema.string().nonempty(),
+  admin: schema.boolean(),
 });
 
 export type User = schema.infer<typeof userSchema>;

@@ -1,5 +1,5 @@
 import { Band, bandSchema } from "@server/schema/band";
-import { CreateBandBody } from "@ui/types/band";
+import { BandBody } from "@ui/types/band";
 
 function getBands(): Promise<Band[]> {
   return fetch("/api/bands").then(async (response) => {
@@ -42,14 +42,11 @@ function getBandByName(bandName: string): Promise<Band> {
     if (!response.ok) throw new Error("Failed to Request Band");
 
     const bandResponse = await response.json();
-    const band = bandSchema.safeParse(bandResponse);
-    if (!band.success) throw new Error(band.error.message);
-
-    return band.data;
+    return bandResponse;
   });
 }
 
-function createBand(band: CreateBandBody): Promise<Band> {
+function createBand(band: BandBody): Promise<Band> {
   return fetch("/api/bands", {
     method: "POST",
     headers: {
@@ -67,12 +64,28 @@ function createBand(band: CreateBandBody): Promise<Band> {
   });
 }
 
+function deleteBand(bandId: string): Promise<void> {
+  return fetch(`/api/bands/${bandId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(async (response) => {
+      if (!response.ok) throw new Error("Failed to Delete Band");
+    })
+    .catch((error) => {
+      throw new Error(error.message);
+    });
+}
+
 interface BandService {
   getBands: () => Promise<Band[]>;
   getBandById: (bandId: string) => Promise<Band>;
   getBandsWithoutShow: () => Promise<Band[]>;
   getBandByName: (bandName: string) => Promise<Band>;
-  createBand: (band: CreateBandBody) => Promise<Band>;
+  createBand: (band: BandBody) => Promise<Band>;
+  deleteBand: (bandId: string) => Promise<void>;
 }
 
 export const bandService: BandService = {
@@ -81,4 +94,5 @@ export const bandService: BandService = {
   getBandsWithoutShow,
   getBandByName,
   createBand,
+  deleteBand,
 };

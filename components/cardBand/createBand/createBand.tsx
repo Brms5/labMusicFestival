@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, TextField, Tooltip, Typography } from "@mui/material";
 import { bandService } from "@ui/services/band";
-import { CreateBandBody } from "@ui/types/band";
+import { BandBody } from "@ui/types/band";
 import { MessageInfo } from "pages/users/[userid]";
 
 interface CreateBandProps {
@@ -26,7 +26,7 @@ function CreateBand({
   setOpenAlert,
   setMessageInfo,
 }: CreateBandProps) {
-  const [bandBody, setBandBody] = React.useState<CreateBandBody>({
+  const [bandBody, setBandBody] = React.useState<BandBody>({
     name: "",
     music_genre: "",
     responsible: "",
@@ -43,7 +43,7 @@ function CreateBand({
     });
   };
 
-  const onClick = async (bandBody: CreateBandBody) => {
+  const onClick = async (bandBody: BandBody) => {
     const band = await bandService.getBandByName(bandBody.name);
     if (band) {
       setOpenAlert(true);
@@ -71,31 +71,7 @@ function CreateBand({
   const disableButton: boolean = !userAdmin || hasEmptyProperties(bandBody);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "250px",
-        height: "400px",
-        border: "3px solid green",
-      }}
-    >
-      <Typography
-        gutterBottom
-        variant="h2"
-        component="div"
-        sx={{
-          fontFamily: "monospace",
-          fontWeight: 700,
-          letterSpacing: ".3rem",
-          color: "#0E8B3B",
-          textDecoration: "none",
-        }}
-      >
-        Band
-      </Typography>
+    <>
       <Typography variant="h5" color="text.secondary">
         Create a band
       </Typography>
@@ -106,6 +82,7 @@ function CreateBand({
         onChange={handleChange}
         label="Name"
         variant="standard"
+        sx={{ width: 200 }}
       />
       <TextField
         id="standard-basic"
@@ -114,6 +91,7 @@ function CreateBand({
         onChange={handleChange}
         label="Genre"
         variant="standard"
+        sx={{ width: 200 }}
       />
       <TextField
         id="standard-basic"
@@ -122,6 +100,7 @@ function CreateBand({
         onChange={handleChange}
         label="Singer"
         variant="standard"
+        sx={{ width: 200 }}
       />
       <Tooltip title="Use image address">
         <TextField
@@ -131,6 +110,7 @@ function CreateBand({
           onChange={handleChange}
           label="Image"
           variant="standard"
+          sx={{ width: 200 }}
         />
       </Tooltip>
       <Button
@@ -145,7 +125,7 @@ function CreateBand({
       >
         Create
       </Button>
-    </div>
+    </>
   );
 }
 
