@@ -1,31 +1,31 @@
-import React from "react";
-import { Button, TextField, Tooltip, Typography } from "@mui/material";
-import { bandService } from "@ui/services/band";
-import { BandBody } from "@ui/types/band";
+import React, { useEffect } from "react";
+import {
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Button,
+  Tooltip,
+  TextField,
+} from "@mui/material";
 import { MessageInfo } from "pages/users/[userid]";
+import { BandBody } from "@ui/types/band";
+import { bandService } from "@ui/services/band";
+import { hasEmptyProperties } from "src/utils/utils";
 
-interface CreateBandProps {
+interface UpdateBandProps {
   userAdmin: boolean | undefined;
-  setNewBand: (newBand: boolean) => void;
-  newBand: boolean;
   setOpenAlert: (openAlert: boolean) => void;
   setMessageInfo: (messageInfo: MessageInfo) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function hasEmptyProperties(obj: any): boolean {
-  return Object.values(obj).some((value) => {
-    return value === "";
-  });
-}
-
-function CreateBand({
+function UpdateBand({
   userAdmin,
-  setNewBand,
-  newBand,
   setOpenAlert,
   setMessageInfo,
-}: CreateBandProps) {
+}: UpdateBandProps) {
+  const [allBands, setAllBands] = React.useState<BandBody[]>([]);
   const [bandBody, setBandBody] = React.useState<BandBody>({
     name: "",
     music_genre: "",
@@ -33,7 +33,14 @@ function CreateBand({
     band_image: "",
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    bandService.getBands().then((bands) => {
+      setAllBands(bands);
+    });
+  }, []);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (event: any) => {
     const { name, value } = event.target;
 
     setBandBody({
@@ -42,47 +49,49 @@ function CreateBand({
     });
   };
 
+  const disableButton: boolean = !userAdmin || hasEmptyProperties(bandBody);
+
   const onClick = async (bandBody: BandBody) => {
-    const band = await bandService.getBandByName(bandBody.name);
-    if (band) {
-      setOpenAlert(true);
-      setMessageInfo({
-        message: "Band already exists!",
-        severity: "error",
-      });
-      return;
-    }
-    await bandService.createBand(bandBody);
+    await bandService.updateBand(bandBody as BandBody);
     setBandBody({
       name: "",
       music_genre: "",
       responsible: "",
       band_image: "",
     });
-    setNewBand(!newBand);
     setOpenAlert(true);
     setMessageInfo({
-      message: "Band created successfully!",
+      message: "Band updated successfully!",
       severity: "success",
     });
   };
 
-  const disableButton: boolean = !userAdmin || hasEmptyProperties(bandBody);
-
   return (
     <>
       <Typography variant="h5" color="text.secondary">
-        Create a band
+        Update a band
       </Typography>
-      <TextField
-        id="standard-basic"
-        name="name"
-        value={bandBody.name}
-        onChange={handleChange}
-        label="Name"
-        variant="standard"
-        sx={{ width: 200 }}
-      />
+      <FormControl variant="standard" sx={{ width: 200 }}>
+        <InputLabel>Name</InputLabel>
+        <Select
+          value={bandBody.name}
+          onChange={handleChange}
+          name="name"
+          type="text"
+        >
+          {allBands.length > 0 ? (
+            allBands.map((band, index) => (
+              <MenuItem key={index} value={band.name}>
+                {band.name}
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem key="" value="">
+              None
+            </MenuItem>
+          )}
+        </Select>
+      </FormControl>
       <TextField
         id="standard-basic"
         name="music_genre"
@@ -122,10 +131,10 @@ function CreateBand({
         disabled={disableButton}
         onClick={() => onClick(bandBody)}
       >
-        Create
+        Update
       </Button>
     </>
   );
 }
 
-export default CreateBand;
+export default UpdateBand;

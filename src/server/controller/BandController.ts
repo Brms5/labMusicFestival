@@ -1,5 +1,5 @@
 import { bandRepository } from "@server/repository/BandRepository";
-import { CreateBand } from "@server/types/band";
+import { BandBody } from "@server/types/band";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function getBands(request: NextApiRequest, response: NextApiResponse) {
@@ -68,7 +68,7 @@ async function getBandByName(
 
 async function createBand(request: NextApiRequest, response: NextApiResponse) {
   try {
-    const bandBody: CreateBand = request.body;
+    const bandBody: BandBody = request.body;
     const band = await bandRepository.insertNewBand(bandBody);
     response.status(201).json(band);
   } catch (error) {
@@ -99,6 +99,20 @@ async function deleteBandById(
   }
 }
 
+async function updateBand(request: NextApiRequest, response: NextApiResponse) {
+  try {
+    const bandBody: BandBody = request.body;
+    const band = await bandRepository.editBand(bandBody);
+    response.status(200).json(band);
+  } catch (error) {
+    response.status(400).json({
+      error: {
+        message: "Failed to Update Band",
+      },
+    });
+  }
+}
+
 interface BandController {
   getBands: (request: NextApiRequest, response: NextApiResponse) => void;
   getBandById: (request: NextApiRequest, response: NextApiResponse) => void;
@@ -109,6 +123,7 @@ interface BandController {
   getBandByName: (request: NextApiRequest, response: NextApiResponse) => void;
   createBand: (request: NextApiRequest, response: NextApiResponse) => void;
   deleteBandById: (request: NextApiRequest, response: NextApiResponse) => void;
+  updateBand: (request: NextApiRequest, response: NextApiResponse) => void;
 }
 
 export const bandController: BandController = {
@@ -118,4 +133,5 @@ export const bandController: BandController = {
   getBandByName,
   createBand,
   deleteBandById,
+  updateBand,
 };

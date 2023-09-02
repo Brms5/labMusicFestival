@@ -79,6 +79,24 @@ function deleteBand(bandId: string): Promise<void> {
     });
 }
 
+function updateBand(band: BandBody): Promise<Band> {
+  return fetch(`/api/bands`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(band),
+  }).then(async (response) => {
+    if (!response.ok) throw new Error("Failed to Update Band");
+
+    const bandResponse = await response.json();
+    const band = bandSchema.safeParse(bandResponse);
+    if (!band.success) throw new Error(band.error.message);
+
+    return band.data;
+  });
+}
+
 interface BandService {
   getBands: () => Promise<Band[]>;
   getBandById: (bandId: string) => Promise<Band>;
@@ -86,6 +104,7 @@ interface BandService {
   getBandByName: (bandName: string) => Promise<Band>;
   createBand: (band: BandBody) => Promise<Band>;
   deleteBand: (bandId: string) => Promise<void>;
+  updateBand: (band: BandBody) => Promise<Band>;
 }
 
 export const bandService: BandService = {
@@ -95,4 +114,5 @@ export const bandService: BandService = {
   getBandByName,
   createBand,
   deleteBand,
+  updateBand,
 };
