@@ -42,14 +42,24 @@ async function insertNewShow(showBody: CreateShowInput): Promise<Show> {
   return parsedData.data;
 }
 
+async function removeShow(showId: string): Promise<void> {
+  const { error } = await supabase
+    .from("NAME_TABLE_SHOWS")
+    .delete()
+    .eq("id", showId);
+  if (error) throw new Error(error.message);
+}
+
 interface ShowRepository {
   findAllShows: () => Promise<Show[]>;
   findShowsByDate: (weekDay: string) => Promise<Show[]>;
   insertNewShow: (showBody: CreateShowInput) => Promise<Show>;
+  removeShow: (showId: string) => Promise<void>;
 }
 
 export const showRepository: ShowRepository = {
   findAllShows,
   findShowsByDate,
   insertNewShow,
+  removeShow,
 };

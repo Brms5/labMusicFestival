@@ -1,17 +1,19 @@
-import React from "react";
 import {
-  Button,
+  Typography,
   FormControl,
   InputLabel,
-  MenuItem,
   Tooltip,
-  Typography,
+  Select,
+  MenuItem,
+  Button,
+  SelectChangeEvent,
 } from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { CreateShowBody } from "@ui/types/show";
-import { BandResponse } from "@ui/types/band";
 import { showService } from "@ui/services/show";
+import { BandResponse } from "@ui/types/band";
+import { CreateShowBody } from "@ui/types/show";
 import { MessageInfo, NumberShowsByDate } from "pages/users/[userid]";
+import React from "react";
+import { hasEmptyProperties } from "src/utils/utils";
 
 interface CreateShowProps {
   bands: BandResponse[];
@@ -39,13 +41,6 @@ const timeOptions = [
   { value: 23, label: "23" },
   { value: 24, label: "24" },
 ];
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function hasEmptyProperties(obj: any): boolean {
-  return Object.values(obj).some((value) => {
-    return value === "";
-  });
-}
 
 function CreateShow({
   bands,
@@ -135,35 +130,11 @@ function CreateShow({
   );
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "250px",
-        height: "400px",
-        border: "3px solid #E75099",
-      }}
-    >
-      <Typography
-        gutterBottom
-        variant="h2"
-        component="div"
-        sx={{
-          fontFamily: "monospace",
-          fontWeight: 700,
-          letterSpacing: ".3rem",
-          color: "#E75099",
-          textDecoration: "none",
-        }}
-      >
-        Show
-      </Typography>
+    <>
       <Typography variant="h5" color="text.secondary">
         Create a show
       </Typography>
-      <FormControl variant="standard" sx={{ minWidth: 160 }}>
+      <FormControl variant="standard" sx={{ width: 200 }}>
         <InputLabel>Day</InputLabel>
         <Tooltip title="3 shows a day" placement="top">
           <Select
@@ -183,7 +154,7 @@ function CreateShow({
           </Select>
         </Tooltip>
       </FormControl>
-      <FormControl variant="standard" sx={{ minWidth: 160 }}>
+      <FormControl variant="standard" sx={{ width: 200 }}>
         <InputLabel>Start</InputLabel>
         <Select
           value={showBody.startTime}
@@ -198,7 +169,7 @@ function CreateShow({
           ))}
         </Select>
       </FormControl>
-      <FormControl variant="standard" sx={{ minWidth: 160 }}>
+      <FormControl variant="standard" sx={{ width: 200 }}>
         <InputLabel>End</InputLabel>
         <Select
           value={showBody.endTime}
@@ -213,26 +184,28 @@ function CreateShow({
           ))}
         </Select>
       </FormControl>
-      <FormControl variant="standard" sx={{ width: 160 }}>
+      <FormControl variant="standard" sx={{ width: 200 }}>
         <InputLabel>Band</InputLabel>
-        <Select
-          value={showBody.band}
-          onChange={handleChange}
-          name="band"
-          type="text"
-        >
-          {bandOptions.length > 0 ? (
-            bandOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+        <Tooltip title="Bands without show" placement="top">
+          <Select
+            value={showBody.band}
+            onChange={handleChange}
+            name="band"
+            type="text"
+          >
+            {bandOptions.length > 0 ? (
+              bandOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem key="" value="">
+                None
               </MenuItem>
-            ))
-          ) : (
-            <MenuItem key="" value="">
-              None
-            </MenuItem>
-          )}
-        </Select>
+            )}
+          </Select>
+        </Tooltip>
       </FormControl>
       <Button
         sx={{
@@ -246,7 +219,7 @@ function CreateShow({
       >
         CREATE
       </Button>
-    </div>
+    </>
   );
 }
 

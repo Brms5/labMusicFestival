@@ -4,5 +4,5 @@ export interface LoggedUser {
   iat: number;
   name: string;
   email: string;
-  role: string;
+  admin: boolean;
 }

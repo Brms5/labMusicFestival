@@ -2,7 +2,7 @@ export interface CreateUser {
   name: string;
   email: string;
   password: string;
-  role: string;
+  admin: boolean;
 }
 
 export interface UserLogin {
@@ -14,5 +14,5 @@ export interface LoggedUserResponse {
   id: string;
   name: string;
   email: string;
-  role: string;
+  admin: boolean;
 }

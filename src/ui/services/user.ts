@@ -69,14 +69,15 @@ function registerUser(userBody: CreateUser): Promise<LoggedUser> {
   });
 }
 
-function updateUserRole(userId: string, role: string): Promise<User> {
+function updateUserRole(userId: string, admin: boolean): Promise<User> {
+  console.log(userId, admin);
   return fetch(`/api/users/${userId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       // token: localStorage.getItem("token") || "",
     },
-    body: JSON.stringify({ role }),
+    body: JSON.stringify({ admin }),
   }).then(async (response) => {
     if (!response.ok) {
       return await response.json().then(({ error }) => {
@@ -94,7 +95,7 @@ interface UserService {
   getUserById: (userId: string) => Promise<User>;
   login: (userBody: UserLogin) => Promise<LoggedUser>;
   registerUser: (userBody: CreateUser) => Promise<LoggedUser>;
-  updateUserRole: (userId: string, role: string) => Promise<User>;
+  updateUserRole: (userId: string, admin: boolean) => Promise<User>;
 }
 
 export const userService: UserService = {

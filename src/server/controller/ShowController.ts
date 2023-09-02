@@ -56,14 +56,36 @@ async function createShow(
   }
 }
 
+async function deleteShow(
+  request: NextApiRequest,
+  response: NextApiResponse
+): Promise<void> {
+  try {
+    const showId = request.query.id as string;
+    showRepository.removeShow(showId).then(() => {
+      response.status(200).json({
+        message: "Show Deleted",
+      });
+    });
+  } catch (error) {
+    response.status(400).json({
+      error: {
+        message: "Failed to Delete Show",
+      },
+    });
+  }
+}
+
 interface ShowController {
   getShows: (request: NextApiRequest, response: NextApiResponse) => void;
   getShowsByDate: (request: NextApiRequest, response: NextApiResponse) => void;
   createShow: (request: NextApiRequest, response: NextApiResponse) => void;
+  deleteShow: (request: NextApiRequest, response: NextApiResponse) => void;
 }
 
 export const showController: ShowController = {
   getShows,
   getShowsByDate,
   createShow,
+  deleteShow,
 };

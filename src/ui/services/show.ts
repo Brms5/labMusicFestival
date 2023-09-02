@@ -62,14 +62,31 @@ function createShow(show: CreateShowBody): Promise<Show> {
     });
 }
 
+function deleteShow(showId: string): Promise<void> {
+  return fetch(`/api/shows?id=${showId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(async (response) => {
+      if (!response.ok) throw new Error("Failed to Delete Show");
+    })
+    .catch((error) => {
+      throw new Error(error.message);
+    });
+}
+
 interface ShowService {
   getShowsByDate: (weekDay: string) => Promise<Show[]>;
   getAllShows: () => Promise<Show[]>;
   createShow: (show: CreateShowBody) => Promise<Show>;
+  deleteShow: (showId: string) => Promise<void>;
 }
 
 export const showService: ShowService = {
   getShowsByDate,
   getAllShows,
   createShow,
+  deleteShow,
 };

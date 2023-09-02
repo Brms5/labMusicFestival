@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { GlobalContext } from "src/context/GlobalContext";
 import Profile from "components/profile/profile";
 import CreateBand from "components/createBand/createBand";
-import CreateShow from "components/createShow/createShow";
 import { BandShowContainer, UserPageContainer } from "./style";
 import { bandService } from "@ui/services/band";
 import { BandResponse } from "@ui/types/band";
@@ -10,6 +9,7 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { Snackbar } from "@mui/material";
 import { showService } from "@ui/services/show";
 import { Show } from "@server/schema/show";
+import CardShow from "components/cardShow/cardShow";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -77,7 +77,7 @@ function UserPage() {
     showService.getAllShows().then((res) => {
       setShows(res);
     });
-  }, [newBand]);
+  }, [newBand, openAlert]);
 
   return (
     <UserPageContainer>
@@ -108,7 +108,7 @@ function UserPage() {
           setOpenAlert={setOpenAlert}
           setMessageInfo={setMessageInfo}
         />
-        <CreateShow
+        <CardShow
           bands={bands}
           userAdmin={userAdmin}
           setOpenAlert={setOpenAlert}

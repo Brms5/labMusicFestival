@@ -42,10 +42,7 @@ function getBandByName(bandName: string): Promise<Band> {
     if (!response.ok) throw new Error("Failed to Request Band");
 
     const bandResponse = await response.json();
-    const band = bandSchema.safeParse(bandResponse);
-    if (!band.success) throw new Error(band.error.message);
-
-    return band.data;
+    return bandResponse;
   });
 }
 

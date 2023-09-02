@@ -12,7 +12,7 @@ interface ProfileProps {
     id: string;
     name: string;
     email: string;
-    role: string;
+    admin: boolean;
   } | null;
   userAdmin: boolean | undefined;
   setUserAdmin: (userAdmin: boolean | undefined) => void;
@@ -21,10 +21,7 @@ interface ProfileProps {
 function Profile({ userLogged, userAdmin, setUserAdmin }: ProfileProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!userLogged) return;
-    userService.updateUserRole(
-      userLogged.id,
-      userLogged.role === "admin" ? "user" : "admin"
-    );
+    userService.updateUserRole(userLogged.id, event.target.checked);
     setUserAdmin(event.target.checked);
   };
 
@@ -37,8 +34,8 @@ function Profile({ userLogged, userAdmin, setUserAdmin }: ProfileProps) {
           justifyContent: "space-between",
           alignItems: "center",
           width: "250px",
-          height: "200px",
-          marginBottom: "20px",
+          height: "150px",
+          marginBottom: "40px",
         }}
       >
         <Typography
@@ -55,24 +52,26 @@ function Profile({ userLogged, userAdmin, setUserAdmin }: ProfileProps) {
         >
           Profile
         </Typography>
-        <Typography
-          gutterBottom
-          variant="h4"
-          component="div"
-          sx={{
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "#009EC9",
-            textDecoration: "none",
-          }}
-        >
-          {userLogged?.name}
-        </Typography>
-        <FormControlLabel
-          control={<Switch checked={userAdmin} onChange={handleChange} />}
-          label="Admin"
-        />
+        <div style={{ display: "flex" }}>
+          <Typography
+            gutterBottom
+            variant="h4"
+            component="div"
+            sx={{
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "#009EC9",
+              textDecoration: "none",
+            }}
+          >
+            {userLogged?.name}
+          </Typography>
+          <FormControlLabel
+            control={<Switch checked={userAdmin} onChange={handleChange} />}
+            label="Admin"
+          />
+        </div>
       </CardContent>
     </>
   );
