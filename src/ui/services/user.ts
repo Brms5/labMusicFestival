@@ -1,5 +1,5 @@
 import { User, userSchema } from "@server/schema/user";
-import { CreateUser, UserLogin } from "@server/types/user";
+import { UserBody, UserLogin } from "@server/types/user";
 import { LoggedUser } from "@ui/types/user";
 
 function getUsers(): Promise<User[]> {
@@ -46,7 +46,7 @@ function login(userLogin: UserLogin): Promise<LoggedUser> {
   });
 }
 
-function registerUser(userBody: CreateUser): Promise<LoggedUser> {
+function registerUser(userBody: UserBody): Promise<LoggedUser> {
   return fetch("/api/users", {
     method: "POST",
     headers: {
@@ -94,7 +94,7 @@ interface UserService {
   getUsers: () => Promise<User[]>;
   getUserById: (userId: string) => Promise<User>;
   login: (userBody: UserLogin) => Promise<LoggedUser>;
-  registerUser: (userBody: CreateUser) => Promise<LoggedUser>;
+  registerUser: (userBody: UserBody) => Promise<LoggedUser>;
   updateUserRole: (userId: string, admin: boolean) => Promise<User>;
 }
 
