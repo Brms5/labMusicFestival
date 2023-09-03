@@ -33,7 +33,7 @@ function Register() {
     name: "",
     email: "",
     password: "",
-    role: "normal",
+    admin: false,
   });
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [openAlert, setOpenAlert] = useState<boolean>(false);
@@ -57,21 +57,21 @@ function Register() {
         name: e.target.value,
         email: userForm.email,
         password: userForm.password,
-        role: "normal",
+        admin: false,
       });
     } else if (e.target.getAttribute("name") == "formEmail") {
       setUserForm({
         name: userForm.name,
         email: e.target.value,
         password: userForm.password,
-        role: "normal",
+        admin: false,
       });
     } else if (e.target.getAttribute("name") == "formPassword") {
       setUserForm({
         name: userForm.name,
         email: userForm.email,
         password: e.target.value,
-        role: "normal",
+        admin: false,
       });
     }
   };
@@ -120,7 +120,7 @@ function Register() {
       userService
         .registerUser(userForm)
         .then((response) => {
-          setUserLogged(response.name[0]);
+          setUserLogged(response);
           if (window.localStorage.getItem("token") !== null) {
             router.push("/");
           }
