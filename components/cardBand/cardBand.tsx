@@ -4,6 +4,7 @@ import { MessageInfo } from "pages/users/[userid]";
 import CreateBand from "./createBand/createBand";
 import { BandResponse } from "@ui/types/band";
 import DeleteBand from "./deleteBand/deleteBand";
+import UpdateBand from "./updateBand/updateBand";
 
 interface CardBandProps {
   bands: BandResponse[];
@@ -78,7 +79,11 @@ function CardBand({
           setMessageInfo={setMessageInfo}
         />
       ) : alignment === "Update" ? (
-        <div>Update</div>
+        <UpdateBand
+          userAdmin={userAdmin}
+          setOpenAlert={setOpenAlert}
+          setMessageInfo={setMessageInfo}
+        />
       ) : (
         <DeleteBand
           bands={bands}

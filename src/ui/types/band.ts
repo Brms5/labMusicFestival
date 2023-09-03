@@ -11,5 +11,5 @@ export interface BandBody {
   music_genre: string;
   responsible: string;
   band_image: string;
-  [key: string]: string;
+  [key: string]: string | undefined;
 }

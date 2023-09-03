@@ -1,17 +1,47 @@
-import React, { useMemo } from "react";
 import {
   Typography,
   FormControl,
   InputLabel,
+  Tooltip,
   Select,
   MenuItem,
   Button,
+  SelectChangeEvent,
 } from "@mui/material";
 import { bandService } from "@ui/services/band";
 import { showService } from "@ui/services/show";
-import { hasEmptyProperties } from "src/utils/utils";
-import { MessageInfo } from "pages/users/[userid]";
+import { BandResponse } from "@ui/types/band";
 import { ShowBandBody, ShowSelected } from "@ui/types/show";
+import { MessageInfo, NumberShowsByDate } from "pages/users/[userid]";
+import React, { useMemo } from "react";
+import { hasEmptyProperties } from "src/utils/utils";
+
+interface UpdateShowProps {
+  bands: BandResponse[];
+  userAdmin: boolean | undefined;
+  setOpenAlert: (openAlert: boolean) => void;
+  setMessageInfo: (messageInfo: MessageInfo) => void;
+  numberShowsByDate: NumberShowsByDate;
+  setNewBand: (newBand: boolean) => void;
+  newBand: boolean;
+}
+
+const timeOptions = [
+  { value: "", label: "None" },
+  { value: 12, label: "12" },
+  { value: 13, label: "13" },
+  { value: 14, label: "14" },
+  { value: 15, label: "15" },
+  { value: 16, label: "16" },
+  { value: 17, label: "17" },
+  { value: 18, label: "18" },
+  { value: 19, label: "19" },
+  { value: 20, label: "20" },
+  { value: 21, label: "21" },
+  { value: 22, label: "22" },
+  { value: 23, label: "23" },
+  { value: 24, label: "24" },
+];
 
 const weekDays = [
   { value: "", label: "None" },
@@ -24,17 +54,13 @@ const weekDays = [
   { value: "Sunday", label: "Sunday" },
 ];
 
-interface DeleteShowProps {
-  userAdmin: boolean | undefined;
-  setOpenAlert: (openAlert: boolean) => void;
-  setMessageInfo: (messageInfo: MessageInfo) => void;
-}
-
-function DeleteShow({
+function UpdateShow({
   userAdmin,
   setOpenAlert,
   setMessageInfo,
-}: DeleteShowProps) {
+  setNewBand,
+  newBand,
+}: UpdateShowProps) {
   const [showBandBody, setShowBandBody] = React.useState<ShowBandBody[]>([]);
   const [showSelected, setShowSelected] = React.useState<ShowSelected>({
     showId: "",
@@ -44,8 +70,17 @@ function DeleteShow({
     endTime: "",
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleChange = (event: any) => {
+  useMemo(() => {
+    const show = showBandBody.find((show) => show.band === showSelected.band);
+    if (show) {
+      setShowSelected({
+        ...showSelected,
+        showId: show.id,
+      });
+    }
+  }, [showSelected.band]);
+
+  const handleChange = (event: SelectChangeEvent) => {
     const { name, value } = event.target;
 
     if (name === "day") {
@@ -81,55 +116,53 @@ function DeleteShow({
     }
   };
 
-  useMemo(() => {
-    const show = showBandBody.find((show) => show.band === showSelected.band);
-    if (show) {
-      setShowSelected({
-        ...showSelected,
-        showId: show.id,
-        startTime: show.startTime,
-        endTime: show.endTime,
-      });
-    }
-  }, [showSelected.band]);
-
   const disableButton: boolean = !userAdmin || hasEmptyProperties(showSelected);
 
-  const onClick = async (showSelect: ShowSelected) => {
-    await showService.deleteShow(showSelect.showId);
+  const onClick = async (showSelected: ShowSelected) => {
+    await showService.updateShow(showSelected);
     setShowSelected({
       showId: "",
       day: "",
-      band: "",
       startTime: "",
       endTime: "",
+      band: "",
     });
     setOpenAlert(true);
+    setNewBand(!newBand);
     setMessageInfo({
-      message: "Show deleted successfully!",
+      message: "Show updated successfully!",
       severity: "success",
     });
   };
 
+  const timeEndOptions = timeOptions.filter(
+    (option) =>
+      (option.value > showSelected.startTime &&
+        option.value <= showSelected.startTime + 3) ||
+      option.value === ""
+  );
+
   return (
     <>
       <Typography variant="h5" color="text.secondary">
-        Delete a show
+        Update a show
       </Typography>
       <FormControl variant="standard" sx={{ width: 200 }}>
         <InputLabel>Day</InputLabel>
-        <Select
-          value={showSelected.day}
-          onChange={handleChange}
-          name="day"
-          type="text"
-        >
-          {weekDays.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select>
+        <Tooltip title="3 shows a day" placement="top">
+          <Select
+            value={showSelected.day}
+            onChange={handleChange}
+            name="day"
+            type="text"
+          >
+            {weekDays.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </Tooltip>
       </FormControl>
       <FormControl variant="standard" sx={{ width: 200 }}>
         <InputLabel>Band</InputLabel>
@@ -155,39 +188,31 @@ function DeleteShow({
       <FormControl variant="standard" sx={{ width: 200 }}>
         <InputLabel>Start</InputLabel>
         <Select
-          value={showSelected.startTime || ""}
-          // onChange={() => handleShowToDelete}
+          value={showSelected.startTime}
+          onChange={handleChange}
           name="startTime"
           type="text"
         >
-          {showSelected ? (
-            <MenuItem key={showSelected.band} value={showSelected.startTime}>
-              {showSelected.startTime}
+          {timeOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
             </MenuItem>
-          ) : (
-            <MenuItem key="" value="">
-              None
-            </MenuItem>
-          )}
+          ))}
         </Select>
       </FormControl>
       <FormControl variant="standard" sx={{ width: 200 }}>
         <InputLabel>End</InputLabel>
         <Select
-          value={showSelected?.endTime || ""}
-          // onChange={() => handleShowToDelete}
+          value={showSelected.endTime}
+          onChange={handleChange}
           name="endTime"
           type="text"
         >
-          {showSelected ? (
-            <MenuItem key={showSelected.band} value={showSelected.endTime}>
-              {showSelected.endTime}
+          {timeEndOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
             </MenuItem>
-          ) : (
-            <MenuItem key="" value="">
-              None
-            </MenuItem>
-          )}
+          ))}
         </Select>
       </FormControl>
       <Button
@@ -200,10 +225,10 @@ function DeleteShow({
         disabled={disableButton}
         onClick={() => onClick(showSelected)}
       >
-        DELETE
+        UPDATE
       </Button>
     </>
   );
 }
 
-export default DeleteShow;
+export default UpdateShow;

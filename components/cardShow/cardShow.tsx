@@ -4,6 +4,7 @@ import CreateShow from "./createShow/createShow";
 import { BandResponse } from "@ui/types/band";
 import { MessageInfo, NumberShowsByDate } from "pages/users/[userid]";
 import DeleteShow from "./deleteShow/deleteShow";
+import UpdateShow from "./updateShow/updateShow";
 
 interface CardShowProps {
   bands: BandResponse[];
@@ -82,7 +83,15 @@ function CardShow({
           newBand={newBand}
         />
       ) : alignment === "Update" ? (
-        <div>Update</div>
+        <UpdateShow
+          bands={bands}
+          userAdmin={userAdmin}
+          setOpenAlert={setOpenAlert}
+          setMessageInfo={setMessageInfo}
+          numberShowsByDate={numberShowsByDate}
+          setNewBand={setNewBand}
+          newBand={newBand}
+        />
       ) : (
         <DeleteShow
           userAdmin={userAdmin}
