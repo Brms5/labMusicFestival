@@ -21,5 +21,5 @@ jobs:
           echo "Hello World"
       - name: "Install Dependencies"
         run: "npm install"
-      - name: "Lint"
+      - name: "Deploy"
         run: "npx vercel --prod"
