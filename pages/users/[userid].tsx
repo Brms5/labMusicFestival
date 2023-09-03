@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GlobalContext } from "src/context/GlobalContext";
 import Profile from "components/profile/profile";
-import { BandShowContainer, UserPageContainer } from "./style";
 import { bandService } from "@ui/services/band";
 import { BandResponse } from "@ui/types/band";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
@@ -10,6 +9,7 @@ import { showService } from "@ui/services/show";
 import { Show } from "@server/schema/show";
 import CardShow from "components/cardShow/cardShow";
 import CardBand from "components/cardBand/cardBand";
+import { BandShowContainer, UserPageContainer } from "@ui/style/GlobalStyle";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
