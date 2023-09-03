@@ -1,5 +1,9 @@
 <h1 align="center">:microphone:	 labMusicFestival :musical_note:</h1>
 
+## :radio: is live 
+
+https://lab-music-festival.vercel.app/login
+
 ## :notebook: About
 
 A festival with several famous bands that will perform over a entire week. The system allows the user to read all the days of the festival, checking the schedules of the shows and details of the bands. Also, as admin, it is possible to register new bands, new shows, edit and delete.  
