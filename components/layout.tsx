@@ -1,7 +1,6 @@
 import React from "react";
-import { HeaderContainer, Main } from "pages/style";
 import Header from "./header/header";
-import { GlobalStyle } from "@ui/style/GlobalStyle";
+import { GlobalStyle, HeaderContainer, Main } from "@ui/style/GlobalStyle";
 import { Content, MainContent, backgroundHome, backgroundLogin } from "./style";
 import { useRouter } from "next/router";
 
