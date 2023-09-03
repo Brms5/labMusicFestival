@@ -100,7 +100,7 @@ function Login() {
     <>
       <Form>
         <TextField
-          id="outlined-basic"
+          id="login-email"
           label="E-mail"
           placeholder="email@email.com"
           variant="outlined"
@@ -114,9 +114,9 @@ function Login() {
           error={validateEmail()}
         />
         <FormControl variant="outlined" fullWidth required margin="dense">
-          <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+          <InputLabel htmlFor="login-password">Senha</InputLabel>
           <OutlinedInput
-            id="outlined-adornment-password"
+            id="login-password"
             type={showPassword ? "text" : "password"}
             value={userPassword}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,11 +135,12 @@ function Login() {
                 </IconButton>
               </InputAdornment>
             }
-            label="Senha"
-            placeholder="Mínimo 6 caracteres"
+            label="Password"
+            placeholder="Minimum 6 characters"
           />
         </FormControl>
         <Button
+          id="login-button"
           variant="contained"
           style={{
             backgroundColor: "#8F80BC",

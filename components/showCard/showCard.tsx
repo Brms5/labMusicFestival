@@ -25,6 +25,7 @@ export default function ShowCard({ showInfo }: inputShowCard) {
 
   return (
     <Card
+      id="card-shows"
       sx={{
         width: "100%",
         height:
@@ -37,10 +38,11 @@ export default function ShowCard({ showInfo }: inputShowCard) {
       }}
     >
       <CardActionArea
+        id="card-shows"
         sx={{ width: "100%", height: "100%" }}
         onClick={goToShows}
       >
-        <CardContent>
+        <CardContent id="card-shows">
           <h1>{`${showInfo.day.weekDay}`}</h1>
         </CardContent>
       </CardActionArea>
