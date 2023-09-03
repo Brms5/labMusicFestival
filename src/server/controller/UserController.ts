@@ -1,5 +1,5 @@
 import { userRepository } from "@server/repository/UserRepository";
-import { LoggedUserResponse, CreateUser } from "@server/types/user";
+import { LoggedUserResponse, UserBody } from "@server/types/user";
 import { NextApiRequest, NextApiResponse } from "next";
 import jsonwebtoken from "jsonwebtoken";
 import { User } from "@server/schema/user";
@@ -35,7 +35,7 @@ async function getUserById(request: NextApiRequest, response: NextApiResponse) {
 
 async function login(request: NextApiRequest, response: NextApiResponse) {
   try {
-    const userBody: CreateUser = request.body;
+    const userBody: UserBody = request.body;
     const user: User = await userRepository.findUserByEmail(userBody);
 
     const loggedUser: LoggedUserResponse = {
@@ -74,7 +74,7 @@ async function registerUser(
   response: NextApiResponse
 ) {
   try {
-    const userBody: CreateUser = request.body;
+    const userBody: UserBody = request.body;
     const user = await userRepository.insertNewUser(userBody);
 
     const loggedUser: LoggedUserResponse = {
