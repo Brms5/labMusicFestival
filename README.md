@@ -14,7 +14,7 @@ A festival with several famous bands that will perform over a entire week. The s
 ### Completed
 - [X] Create band (Admin);
 - [X] Create a show linked to a day (Admin);
-- [ ] Update a show (Admin);
+- [X] Update a show (Admin);
 - [ ] Create ticket (Admin);
 - [ ] Buy a ticket;
 
