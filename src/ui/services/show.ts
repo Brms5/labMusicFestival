@@ -1,6 +1,5 @@
 import { Show, showSchema } from "@server/schema/show";
-import { CreateShowInput } from "@server/types/show";
-import { CreateShowBody } from "@ui/types/show";
+import { CreateShowInput, ShowBody } from "@ui/types/show";
 
 function getShowsByDate(weekDay: string): Promise<Show[]> {
   return fetch(`/api/shows?weekday=${weekDay}`)
@@ -34,7 +33,7 @@ function getAllShows(): Promise<Show[]> {
     });
 }
 
-function createShow(show: CreateShowBody): Promise<Show> {
+function createShow(show: ShowBody): Promise<Show> {
   const newShow: CreateShowInput = {
     week_day: show.day,
     start_time: Number(show.startTime),
@@ -77,11 +76,28 @@ function deleteShow(showId: string): Promise<void> {
     });
 }
 
+function updateShow(showBody: ShowBody): Promise<void> {
+  return fetch("/api/shows", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(showBody),
+  })
+    .then(async (response) => {
+      if (!response.ok) throw new Error("Failed to Update Show");
+    })
+    .catch((error) => {
+      throw new Error(error.message);
+    });
+}
+
 interface ShowService {
   getShowsByDate: (weekDay: string) => Promise<Show[]>;
   getAllShows: () => Promise<Show[]>;
-  createShow: (show: CreateShowBody) => Promise<Show>;
+  createShow: (show: ShowBody) => Promise<Show>;
   deleteShow: (showId: string) => Promise<void>;
+  updateShow: (show: ShowBody) => Promise<void>;
 }
 
 export const showService: ShowService = {
@@ -89,4 +105,5 @@ export const showService: ShowService = {
   getAllShows,
   createShow,
   deleteShow,
+  updateShow,
 };

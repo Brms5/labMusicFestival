@@ -83,7 +83,15 @@ function CardShow({
           newBand={newBand}
         />
       ) : alignment === "Update" ? (
-        <UpdateShow />
+        <UpdateShow
+          bands={bands}
+          userAdmin={userAdmin}
+          setOpenAlert={setOpenAlert}
+          setMessageInfo={setMessageInfo}
+          numberShowsByDate={numberShowsByDate}
+          setNewBand={setNewBand}
+          newBand={newBand}
+        />
       ) : (
         <DeleteShow
           userAdmin={userAdmin}

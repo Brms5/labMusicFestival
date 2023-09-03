@@ -11,6 +11,7 @@ import { bandService } from "@ui/services/band";
 import { showService } from "@ui/services/show";
 import { hasEmptyProperties } from "src/utils/utils";
 import { MessageInfo } from "pages/users/[userid]";
+import { ShowBandBody, ShowSelected } from "@ui/types/show";
 
 const weekDays = [
   { value: "", label: "None" },
@@ -22,23 +23,6 @@ const weekDays = [
   { value: "Saturday", label: "Saturday" },
   { value: "Sunday", label: "Sunday" },
 ];
-
-interface ShowBandBody {
-  id: string;
-  day: string;
-  band: string;
-  bandName: string;
-  startTime: string;
-  endTime: string;
-}
-
-interface ShowSelected {
-  showId: string;
-  day: string;
-  band: string;
-  startTime: string;
-  endTime: string;
-}
 
 interface DeleteShowProps {
   userAdmin: boolean | undefined;

@@ -1,6 +1,6 @@
 import { showRepository } from "@server/repository/ShowRepository";
 import { Show } from "@server/schema/show";
-import { CreateShowInput } from "@server/types/show";
+import { ShowBody } from "@server/types/show";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function getShows(
@@ -43,7 +43,7 @@ async function createShow(
   response: NextApiResponse
 ): Promise<void> {
   try {
-    const showBody = request.body as CreateShowInput;
+    const showBody = request.body as ShowBody;
     showRepository.insertNewShow(showBody).then((show: Show) => {
       response.status(200).json(show);
     });
@@ -76,11 +76,36 @@ async function deleteShow(
   }
 }
 
+async function updateShow(
+  request: NextApiRequest,
+  response: NextApiResponse
+): Promise<void> {
+  try {
+    const showBody = {
+      id: request.body.showId,
+      week_day: request.body.day,
+      start_time: request.body.startTime,
+      end_time: request.body.endTime,
+      band_id: request.body.band,
+    };
+    showRepository.editShow(showBody).then((show: Show) => {
+      response.status(200).json(show);
+    });
+  } catch (error) {
+    response.status(400).json({
+      error: {
+        message: "Failed to Update Show",
+      },
+    });
+  }
+}
+
 interface ShowController {
   getShows: (request: NextApiRequest, response: NextApiResponse) => void;
   getShowsByDate: (request: NextApiRequest, response: NextApiResponse) => void;
   createShow: (request: NextApiRequest, response: NextApiResponse) => void;
   deleteShow: (request: NextApiRequest, response: NextApiResponse) => void;
+  updateShow: (request: NextApiRequest, response: NextApiResponse) => void;
 }
 
 export const showController: ShowController = {
@@ -88,4 +113,5 @@ export const showController: ShowController = {
   getShowsByDate,
   createShow,
   deleteShow,
+  updateShow,
 };
