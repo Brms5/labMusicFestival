@@ -88,6 +88,10 @@ export const UserPageContainer = styled.div`
   align-items: center;
   max-width: 900px;
   height: 80vh;
+
+  @media (max-width: 800px) {
+    height: 1120px;
+  }
 `;
 
 export const BandShowContainer = styled.div`
@@ -96,4 +100,8 @@ export const BandShowContainer = styled.div`
   width: 100%;
   height: 400px;
   gap: 10px;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;

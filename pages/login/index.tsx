@@ -114,7 +114,7 @@ function Login() {
           error={validateEmail()}
         />
         <FormControl variant="outlined" fullWidth required margin="dense">
-          <InputLabel htmlFor="login-password">Senha</InputLabel>
+          <InputLabel htmlFor="login-password">Password</InputLabel>
           <OutlinedInput
             id="login-password"
             type={showPassword ? "text" : "password"}
@@ -155,7 +155,7 @@ function Login() {
           }}
           disabled={disableButtonLogin()}
         >
-          Entrar
+          Enter
         </Button>
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
@@ -164,7 +164,7 @@ function Login() {
           onClose={handleClose}
         >
           <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-            Endereço de e-mail ou senha incorretos.
+            E-mail address or password incorrect.
           </Alert>
         </Snackbar>
         <Button
@@ -176,7 +176,7 @@ function Login() {
           }}
           onClick={() => router.push("/register")}
         >
-          Não possui cadastro? Clique aqui.
+          Create an account
         </Button>
       </Form>
     </>

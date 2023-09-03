@@ -131,7 +131,7 @@ function Register() {
         });
     } else {
       setOpenAlert(true);
-      setErrorMessage("Preencha os campos corretamente");
+      setErrorMessage("Fill in the fields correctly");
     }
   };
 
@@ -140,8 +140,8 @@ function Register() {
       <Form>
         <TextField
           id="outlined-basic-name"
-          label="Nome"
-          placeholder="Nome"
+          label="Name"
+          placeholder="Name"
           variant="outlined"
           required
           margin="dense"
@@ -168,7 +168,9 @@ function Register() {
           error={validateEmail()}
         />
         <FormControl variant="outlined" fullWidth required margin="dense">
-          <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
@@ -184,8 +186,8 @@ function Register() {
                 </IconButton>
               </InputAdornment>
             }
-            label="Senha"
-            placeholder="Mínimo 6 caracteres"
+            label="Password"
+            placeholder="Minimum 6 characters"
             name="formPassword"
             value={userForm.password}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -195,9 +197,7 @@ function Register() {
           />
         </FormControl>
         <FormControl variant="outlined" fullWidth required margin="dense">
-          <InputLabel htmlFor="outlined-adornment-password">
-            Confirmar
-          </InputLabel>
+          <InputLabel htmlFor="outlined-adornment-password">Confirm</InputLabel>
           <OutlinedInput
             id="outlined-adornment-confirm"
             type={showConfirmPassword ? "text" : "password"}
@@ -213,8 +213,8 @@ function Register() {
                 </IconButton>
               </InputAdornment>
             }
-            label="Confirmar"
-            placeholder="Mínimo 6 caracteres"
+            label="Confirm"
+            placeholder="Minimum 6 characters"
             value={confirmPassword}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setConfirmPassword(event.target.value);
@@ -222,7 +222,7 @@ function Register() {
             error={confirmPassword != userForm.password}
           />
           <FormHelperText hidden={confirmPassword == userForm.password}>
-            Deve ser a mesma que a anterior.
+            The password has to be the same
           </FormHelperText>
         </FormControl>
         <Button
@@ -240,7 +240,7 @@ function Register() {
           }}
           disabled={disableButtonRegister()}
         >
-          Criar
+          Create
         </Button>
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "center" }}

@@ -52,10 +52,19 @@ function Profile({ userLogged, userAdmin, setUserAdmin }: ProfileProps) {
         >
           Profile
         </Typography>
-        <div style={{ display: "flex" }}>
+        <div
+          style={{
+            display: "flex",
+            width: "300px",
+            height: "100px",
+            justifyContent: "space-between",
+            alignItems: "center",
+            alignContent: "center",
+          }}
+        >
           <Typography
             gutterBottom
-            variant="h4"
+            variant="h3"
             component="div"
             sx={{
               fontFamily: "monospace",
