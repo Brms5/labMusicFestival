@@ -1,7 +1,7 @@
 import React from "react";
 import InfoCard from "components/infoCard/infoCard";
-import { CardsContainer } from "./style";
 import ShowCard from "components/showCard/showCard";
+import { CardsContainer } from "@ui/style/GlobalStyle";
 
 export interface ShowInfo {
   day: WeekDay;

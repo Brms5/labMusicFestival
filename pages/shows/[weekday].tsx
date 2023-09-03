@@ -5,7 +5,7 @@ import { Show } from "@server/schema/show";
 import { showService } from "@ui/services/show";
 import BandInfo from "components/bandInfo/bandInfo";
 import ShowCard from "components/showCard/showCard";
-import { CardsContainer } from "pages/style";
+import { CardsContainer } from "@ui/style/GlobalStyle";
 
 export interface ShowInfo {
   day: WeekDay;

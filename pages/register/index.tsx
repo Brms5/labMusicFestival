@@ -14,9 +14,9 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import { UserBody } from "@server/types/user";
-import { Form } from "pages/login/style";
 import { userService } from "@ui/services/user";
 import { GlobalContext } from "src/context/GlobalContext";
+import { Form } from "@ui/style/GlobalStyle";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,

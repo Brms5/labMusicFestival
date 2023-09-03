@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Form } from "./style";
 import {
   Button,
   FormControl,
@@ -17,6 +16,7 @@ import { userService } from "@ui/services/user";
 import { UserLogin } from "@server/types/user";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { GlobalContext } from "src/context/GlobalContext";
+import { Form } from "@ui/style/GlobalStyle";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
