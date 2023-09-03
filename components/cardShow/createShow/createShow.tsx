@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { showService } from "@ui/services/show";
 import { BandResponse } from "@ui/types/band";
-import { CreateShowBody } from "@ui/types/show";
+import { ShowBody } from "@ui/types/show";
 import { MessageInfo, NumberShowsByDate } from "pages/users/[userid]";
 import React from "react";
 import { hasEmptyProperties } from "src/utils/utils";
@@ -51,7 +51,7 @@ function CreateShow({
   setNewBand,
   newBand,
 }: CreateShowProps) {
-  const [showBody, setShowBody] = React.useState<CreateShowBody>({
+  const [showBody, setShowBody] = React.useState<ShowBody>({
     day: "",
     startTime: "",
     endTime: "",
@@ -106,7 +106,7 @@ function CreateShow({
 
   const disableButton: boolean = !userAdmin || hasEmptyProperties(showBody);
 
-  const onClick = async (showBody: CreateShowBody) => {
+  const onClick = async (showBody: ShowBody) => {
     await showService.createShow(showBody);
     setShowBody({
       day: "",
